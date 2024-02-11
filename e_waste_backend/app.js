@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 require("./db/config");
-const users = require("./db/users");
+const userModel = require("./db/users");
 const cors = require("cors");
 
 // Middlewares
@@ -14,9 +14,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/registerUser", async (req, res) => {
-    let user = new users(req.body);
+    let user = new userModel(req.body);
     let ans = await user.save();
     res.send(ans);
-})
+});
+
+app.get("/findUserByName",async (req, res) => {
+    let regex =await new RegExp(req.body.username, "i");// to eleminate case sensitve search
+    let user = await userModel.findOne({username: regex});
+    res.send(user);
+});
 
 app.listen(3000);
