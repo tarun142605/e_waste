@@ -14,7 +14,7 @@ app.use(cors());
 app.post("/registerCustomer", async (req, res) => {
     let customer = new customerModel(req.body);
     let ans = await customer.save();
-    res.send("customer added");
+    res.send(ans);
 });
 
 app.get("/findCustomerByUsername",async (req, res) =>{
