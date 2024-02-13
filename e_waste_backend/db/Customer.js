@@ -7,10 +7,10 @@ const userSchema = new mongoose.Schema({
         Street: String,
         City: String,
         State: String,
-        Zip: String,
+        Pincode: String,
     },
     Contact: String,
     UserName: String,
-    Password: String,
+    Password: String
 });
 module.exports = mongoose.model("Customer", userSchema);
