@@ -11,6 +11,6 @@ const userSchema = new mongoose.Schema({
     },
     Contact: String,
     UserName: String,
-    Password: String
+    Password: String,
 });
 module.exports = mongoose.model("Customer", userSchema);

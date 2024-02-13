@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         Street: String,
         City: String,
         State: String,
-        Pincode: String,
+        Zip: String,
     },
     Contact: String,
     UserName: String,

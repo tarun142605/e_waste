@@ -9,20 +9,17 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-// APIs
-app.get("/", (req, res) => {
-});
+// APIs for customers
 
 app.post("/registerCustomer", async (req, res) => {
-    let customer = new customerModel(req.body);
-    let ans = await customer.save();
+    let Customer = new customerModel(req.body);
+    let ans = await Customer.save();
     res.send(ans);
 });
 
-app.get("/findUserByName",async (req, res) => {
-    let regex =await new RegExp(req.body.username, "i");// to eleminate case sensitve search
-    let user = await userModel.findOne({username: regex});
-    res.send(user);
-});
+app.get("/findCustomerByUsername",async (req, res) =>{
+    let details =await customerModel.findOne({UserName: req.body.UserName});
+    res.send(details);
+})
 
 app.listen(3000);
