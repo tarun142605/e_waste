@@ -12,8 +12,8 @@ app.use(cors());
 // APIs for customers
 
 app.post("/registerCustomer", async (req, res) => {
-    let customer = new customerModel(req.body);
-    let ans = await customer.save();
+    let Customer = new customerModel(req.body);
+    let ans = await Customer.save();
     res.send(ans);
 });
 
