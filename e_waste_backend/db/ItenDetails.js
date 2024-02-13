@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
         Itemweight: Number,
         Itemprice: String,
     },
-    ItemStatus: String
+    ItemStatus: String,
 });
 module.exports = mongoose.model("ItemDetails", userSchema);
