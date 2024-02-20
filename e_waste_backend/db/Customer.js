@@ -1,17 +1,50 @@
-const mongoose = require("mongoose");
-const userSchema = new mongoose.Schema({
-    Name: String,
-    Age: Number,
-    Email: String,
-    Address:{
-        HouseNo: String,
-        Street: String,
-        City: String,
-        State: String,
-        Pincode: String,
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
+const customerSchema = new Schema({
+    Name: {
+        type : String,
+        required : true
     },
-    Contact: String,
-    UserName: String,
-    Password: String,
+    Email: {
+        type : String,
+        unique : true,
+        required : true
+    },
+    Address:{
+        HouseNo: {
+            type : String,
+            required : true
+        },
+        Street: {
+            type : String,
+            required : true
+        },
+        City: {
+            type : String,
+            required : true
+        },
+        State: {
+            type : String,
+            required : true
+        },
+        Pincode: {
+            type : String,
+            required : true
+        },
+    },
+    Contact: {
+        type : Number,
+        required : true
+    },
+    UserName: {
+        type : String,
+        unique : true,
+        required : true
+    },
+    Password: {
+        type : String,
+        required : true
+    },
 });
-module.exports = mongoose.model("Customer", userSchema);
+
+export default model("Customer", customerSchema);

@@ -1,12 +1,12 @@
-const express = require("express");
-const mongoose = require("mongoose");
+import express, { json } from "express";
+import mongoose from "mongoose";
 const app = express();
-require("./db/config");
-const customerModel = require("./db/Customer");
-const cors = require("cors");
+import "./db/config.js";
+import customerModel, { findOne } from "./db/Customer.js";
+import cors from "cors";
 
 // Middlewares
-app.use(express.json());
+app.use(json());
 app.use(cors());
 
 // APIs for customers
@@ -20,7 +20,7 @@ app.post("/registerCustomer", async (req, res) => {
 });
 
 app.get("/findCustomerByUsername",async (req, res) =>{
-    let details =await customerModel.findOne({UserName: req.body.UserName});
+    let details =await findOne({UserName: req.body.UserName});
     res.send(details);
 })
 
