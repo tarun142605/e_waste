@@ -1,8 +1,7 @@
 import express, { json } from "express";
-import mongoose from "mongoose";
 const app = express();
 import "./db/config.js";
-import customerModel, { findOne } from "./db/Customer.js";
+import customerModel from "./db/Customer.js";
 import cors from "cors";
 
 // Middlewares
