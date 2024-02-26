@@ -1,23 +1,27 @@
-import express from "express";
-import "./config/dbconnect.js";
-import customerRoutes from "./routes/customerRoute.js";
-import collectionAgentRoutes from "./routes/collectionAgentRoute.js";
-const app = express();
+// Initialize the server and connect to the database
+import express from 'express';
+import connectDB from './Config/dbConnect.js';
+import customerRoute from './Routes/customerRoutes.js';
+import cors from 'cors';
 
-import cors from "cors";
+const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
 
-// Routes
-app.use("/customer", customerRoutes);
-app.use("/collectionAgent", collectionAgentRoutes);
+// Database Connection
+connectDB();
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
+// Routes
+app.use('/customers', customerRoute);
+
+// Home Route
+app.get('/', (req, res) => {
+     res.send('API is running');
 });
 
+// Server
 app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+    console.log('Server is running on port 3000');
 });
