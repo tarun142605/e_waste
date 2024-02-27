@@ -1,18 +1,12 @@
 import express from 'express';
 const router = express.Router();
-import Customer from '../DatabaseModels/customerModel.js';
+import { registerCustomer } from '../Controllers/customerController.js';
 
-// API for register customer
-router.post('/register', async (req, res) => {
-    let createdCustomer = await Customer.create(req.body);
-    res.send(createdCustomer);
-});
+// Route URL for register customer
+router.post('/register', registerCustomer);
 
-//  API for get all customers
-router.get('/getCustomerByContact', async (req, res) => {
-    let customer = await Customer.findOne({ Contact: req.body.Contact });
-    res.send(customer);
-});
+//  Route URL for get all customers
+//router.get('/getCustomerByEmail', getCustomerByEmail);
 
 //  API for update customer details
 
