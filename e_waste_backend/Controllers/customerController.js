@@ -16,7 +16,23 @@ const registerCustomer = asyncHandler(async (req, res) => {
     const customer = await Customer.create(req.body);
 
     if (customer) {
-        res.status(200).json(customer);
+        res.status(200).json({
+            _id: customer._id,
+            Name: {
+                FirstName: customer.Name.FirstName,
+                LastName: customer.Name.LastName
+            },
+            Email: customer.Email,
+            Address: {
+                HouseNo: customer.Address.HouseNo,
+                Street: customer.Address.Street,
+                City: customer.Address.City,
+                State: customer.Address.State,
+                Pincode: customer.Address.Pincode
+            },
+            Contact: customer.Contact,
+            Password: customer.Password
+        });
     } else {
         res.status(400);
         throw new Error('Invalid customer data');
@@ -25,7 +41,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
 });
 
 const getCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findOne({Email : req.body.Email});
+    const customer = await Customer.findOne(req.params.Email);
     if (customer) {
         res.json(customer);
     } else {
@@ -40,7 +56,7 @@ const getCustomer = asyncHandler(async (req, res) => {
 // DELETE /api/customers/:id
 // Private/Admin
 const deleteCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findOneAndDelete({ Email: req.body.Email });
+    const customer = await Customer.findOneAndDelete(req.params.Email);
     if (customer) {
         res.json({ message: 'Customer removed' });
     } else {

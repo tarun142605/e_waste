@@ -7,7 +7,7 @@ import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 // Public
 const loginCollectionAgent = asyncHandler(async (req, res) => {
     const { Email, Password } = req.body;
-    const collectionAgent = await CollectionAgent.findOne({ Email });
+    const collectionAgent = await CollectionAgent.findOne({Email});
     if (collectionAgent && (await collectionAgent.matchPassword(Password))) {res.json({
             _id: collectionAgent._id,
             Name: {
@@ -80,7 +80,7 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
 });
 
 const getCollectionAgent = asyncHandler(async (req, res) => {
-    const collectionAgent = await CollectionAgent.findById({Email : req.body.Email});
+    const collectionAgent = await CollectionAgent.findById(req.params.Email);
     if (collectionAgent) {
         res.json(collectionAgent);
     } else {
@@ -91,7 +91,7 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
 
 
 const deleteCollectionAgent = asyncHandler(async (req, res) => {
-    const collectionAgent = await CollectionAgent.findOneAndDelete({Email : req.body.Email});
+    const collectionAgent = await CollectionAgent.findOneAndDelete(req.params.Email);
     if (collectionAgent) {
         res.json({ message: 'Collection Agent removed' });
     } else {
