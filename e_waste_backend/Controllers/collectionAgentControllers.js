@@ -1,6 +1,41 @@
 import asyncHandler from 'express-async-handler';
 import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 
+
+// Login a collection agent
+// POST /api/collectionAgents/login
+// Public
+const loginCollectionAgent = asyncHandler(async (req, res) => {
+    const { Email, Password } = req.body;
+    const collectionAgent = await CollectionAgent.findOne({ Email });
+    if (collectionAgent && (await collectionAgent.matchPassword(Password))) {res.json({
+            _id: collectionAgent._id,
+            Name: {
+                FirstName: collectionAgent.Name.FirstName,
+                LastName: collectionAgent.Name.LastName
+            },
+            Email: collectionAgent.Email,
+            Address: {
+                HouseNo: collectionAgent.Address.HouseNo,
+                Street: collectionAgent.Address.Street,
+                City: collectionAgent.Address.City,
+                State: collectionAgent.Address.State,
+                Pincode: collectionAgent.Address.Pincode
+            },
+            IdentityProof: {
+                IdentityProofType: collectionAgent.IdentityProof.IdentityProofType,
+                IdentityProofNo: collectionAgent.IdentityProof.IdentityProofNo,
+                IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
+            },
+            Contact: collectionAgent.Contact,
+            Password: collectionAgent.Password
+        });
+    } else {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
+});
+
 // Register a new collection agent
 // POST /api/collectionAgents
 // Public
@@ -33,7 +68,7 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
             IdentityProof: {
                 IdentityProofType: collectionAgent.IdentityProof.IdentityProofType,
                 IdentityProofNo: collectionAgent.IdentityProof.IdentityProofNo,
-                IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
+                //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
             },
             Contact: collectionAgent.Contact,
             Password: collectionAgent.Password
@@ -54,9 +89,6 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
     }
 });
 
-const updateCollectionAgent = asyncHandler(async (req, res) => {
-    const collectionAgent = await CollectionAgent.findOneAndUpdate({});
-});
 
 const deleteCollectionAgent = asyncHandler(async (req, res) => {
     const collectionAgent = await CollectionAgent.findOneAndDelete({Email : req.body.Email});
@@ -67,4 +99,4 @@ const deleteCollectionAgent = asyncHandler(async (req, res) => {
         throw new Error('Collection Agent not found');
     }
 });
-export { registerCollectionAgent,getCollectionAgent,updateCollectionAgent,deleteCollectionAgent };
+export { loginCollectionAgent,registerCollectionAgent,getCollectionAgent,deleteCollectionAgent };

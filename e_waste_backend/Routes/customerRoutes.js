@@ -3,7 +3,7 @@ const router = express.Router();
 import { registerCustomer,getCustomer,deleteCustomer } from '../Controllers/customerController.js';
 
 // Route URL for register customer
-router.post('/register', registerCustomer);
+router.post('/registerCustomer', registerCustomer);
 
 //  Route URL for get all customers
 router.get('/getCustomerByEmail', getCustomer);

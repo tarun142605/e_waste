@@ -40,7 +40,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
 });
 
 const getCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findById(req.params.id);
+    const customer = await Customer.findOne({Email : req.body.Email});
     if (customer) {
         res.json(customer);
     } else {
@@ -49,9 +49,7 @@ const getCustomer = asyncHandler(async (req, res) => {
     }
 });  
 
-const updateCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findOneAndUpdate({});
-});
+
 
 // Delete a customer
 // DELETE /api/customers/:id

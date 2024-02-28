@@ -38,6 +38,8 @@ const customerSchema = new mongoose.Schema({
     },
     Contact: {
         type: Number,
+        min : 10,
+        max : 10,
         required: true
     },
     Password: {
