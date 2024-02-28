@@ -16,7 +16,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
     const customer = await Customer.create(req.body);
     
     if (customer) {
-        res.status(201).json({
+        res.status(200).json({
             _id: customer._id,
             Name: {
                 FirstName: customer.Name.FirstName,
@@ -39,4 +39,31 @@ const registerCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { registerCustomer };
+const getCustomer = asyncHandler(async (req, res) => {
+    const customer = await Customer.findById(req.params.id);
+    if (customer) {
+        res.json(customer);
+    } else {
+        res.status(404);
+        throw new Error('Customer not found');
+    }
+});  
+
+const updateCustomer = asyncHandler(async (req, res) => {
+    const customer = await Customer.findOneAndUpdate({});
+});
+
+// Delete a customer
+// DELETE /api/customers/:id
+// Private/Admin
+const deleteCustomer = asyncHandler(async (req, res) => {
+    const customer = await Customer.findOneAndDelete({Email : req.body.Email});
+    if (customer) {
+        res.json({ message: 'Customer removed' });
+    } else {
+        res.status(404);
+        throw new Error('Customer not found');
+    }
+});
+
+export { registerCustomer , getCustomer , deleteCustomer};

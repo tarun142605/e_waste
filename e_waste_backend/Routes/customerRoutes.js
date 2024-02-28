@@ -1,13 +1,14 @@
 import express from 'express';
 const router = express.Router();
-import { registerCustomer } from '../Controllers/customerController.js';
+import { registerCustomer,getCustomer,deleteCustomer } from '../Controllers/customerController.js';
 
 // Route URL for register customer
 router.post('/register', registerCustomer);
 
 //  Route URL for get all customers
-//router.get('/getCustomerByEmail', getCustomerByEmail);
+router.get('/getCustomerByEmail', getCustomer);
 
-//  API for update customer details
+//  Route URL for delete customer details
+router.delete('/deleteCustomer', deleteCustomer);
 
 export default router;

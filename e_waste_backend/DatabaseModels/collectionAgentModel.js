@@ -48,7 +48,8 @@ const collectionAgentSchema = new mongoose.Schema({
             required: true
         },
         IdentityProofImage: {
-            type: URL,
+            data: Buffer,
+            type: String,
             required: true
         }
     },
@@ -70,3 +71,4 @@ const collectionAgentSchema = new mongoose.Schema({
 });
 
 const CollectionAgent = mongoose.model('CollectionAgent', collectionAgentSchema);
+export default CollectionAgent;

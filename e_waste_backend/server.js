@@ -2,6 +2,7 @@
 import express from 'express';
 import connectDB from './Config/dbConnect.js';
 import customerRoute from './Routes/customerRoutes.js';
+import collectionAgentRoute from './Routes/collectionAgentRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -15,6 +16,7 @@ connectDB();
 
 // Routes
 app.use('/customers', customerRoute);
+app.use('/collectionAgents', collectionAgentRoute);
 
 // Home Route
 app.get('/', (req, res) => {
