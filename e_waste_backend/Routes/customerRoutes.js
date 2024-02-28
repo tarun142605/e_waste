@@ -1,6 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { registerCustomer,getCustomer,deleteCustomer } from '../Controllers/customerController.js';
+import { loginCustomer,registerCustomer,getCustomer,deleteCustomer } from '../Controllers/customerController.js';
+
+// Route URL for Login for customer
+router.post('/loginCustomer', loginCustomer);
 
 // Route URL for register customer
 router.post('/registerCustomer', registerCustomer);

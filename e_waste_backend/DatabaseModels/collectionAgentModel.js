@@ -47,11 +47,11 @@ const collectionAgentSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-    //     IdentityProofImage: {
-    //         data: Buffer,
-    //         type: String,
-    //         required: true
-    //     }
+        IdentityProofImage: {
+            data: Buffer,
+            type: String,
+            required: true
+        }
     },
     Contact: {
         type: String,

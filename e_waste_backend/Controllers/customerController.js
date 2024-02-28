@@ -1,6 +1,35 @@
 import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
 
+// Login a customer
+// POST /api/customers/login
+// Public
+const loginCustomer = asyncHandler(async (req, res) => {
+    const { Email, Password } = req.body;
+    const customer = await Customer.findOne({ Email });
+    if (customer && (customer.Password === Password)) {
+        res.status(200).json({
+            _id: customer._id,
+            Name: {
+                FirstName: customer.Name.FirstName,
+                LastName: customer.Name.LastName
+            },
+            Email: customer.Email,
+            Address: {
+                HouseNo: customer.Address.HouseNo,
+                Street: customer.Address.Street,
+                City: customer.Address.City,
+                State: customer.Address.State,
+                Pincode: customer.Address.Pincode
+            },
+            Contact: customer.Contact
+        });
+    } else {
+        res.status(400);
+        throw new Error('Invalid email or password');
+    }
+});
+
 // Register a new customer
 // POST /api/customers
 // Public
@@ -65,4 +94,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { registerCustomer, getCustomer, deleteCustomer };
+export { loginCustomer,registerCustomer, getCustomer, deleteCustomer };

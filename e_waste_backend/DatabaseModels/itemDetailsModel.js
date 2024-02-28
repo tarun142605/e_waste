@@ -13,10 +13,6 @@ const itemDetailsSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        ItemBrand: {
-            type: String,
-            required: true
-        },
         ItemCondition: {
             type: String,
             enum: ['Good', 'Average', 'Worst'],
@@ -29,7 +25,7 @@ const itemDetailsSchema = new mongoose.Schema({
         }
     },
     ItemImage: {
-        type: URL,
+        type: String,
         required: true
     },
     ItemPrice: {

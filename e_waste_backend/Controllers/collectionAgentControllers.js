@@ -7,8 +7,9 @@ import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 // Public
 const loginCollectionAgent = asyncHandler(async (req, res) => {
     const { Email, Password } = req.body;
-    const collectionAgent = await CollectionAgent.findOne({Email});
-    if (collectionAgent && (await collectionAgent.matchPassword(Password))) {res.json({
+    const collectionAgent = await CollectionAgent.findOne({ Email });
+    if (collectionAgent && (collectionAgent.Password === Password)) {
+        res.status(200).json({
             _id: collectionAgent._id,
             Name: {
                 FirstName: collectionAgent.Name.FirstName,
@@ -25,13 +26,12 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
             IdentityProof: {
                 IdentityProofType: collectionAgent.IdentityProof.IdentityProofType,
                 IdentityProofNo: collectionAgent.IdentityProof.IdentityProofNo,
-                IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
+                //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
             },
-            Contact: collectionAgent.Contact,
-            Password: collectionAgent.Password
+            Contact: collectionAgent.Contact
         });
     } else {
-        res.status(401);
+        res.status(400);
         throw new Error('Invalid email or password');
     }
 });
@@ -40,16 +40,16 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
 // POST /api/collectionAgents
 // Public
 const registerCollectionAgent = asyncHandler(async (req, res) => {
-  const details = CollectionAgent(req.body);
+    const details = CollectionAgent(req.body);
 
-  const collectionAgentExists = await CollectionAgent.findOne({ Email: details.Email });
+    const collectionAgentExists = await CollectionAgent.findOne({ Email: details.Email });
     if (collectionAgentExists) {
-        res.status(400); 
+        res.status(400);
         throw new Error('Collection Agent already exists');
     }
 
     const collectionAgent = await CollectionAgent.create(req.body);
-    
+
     if (collectionAgent) {
         res.status(200).json({
             _id: collectionAgent._id,
@@ -99,4 +99,4 @@ const deleteCollectionAgent = asyncHandler(async (req, res) => {
         throw new Error('Collection Agent not found');
     }
 });
-export { loginCollectionAgent,registerCollectionAgent,getCollectionAgent,deleteCollectionAgent };
+export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent };
