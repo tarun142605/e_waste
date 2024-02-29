@@ -6,8 +6,8 @@ import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 // POST /api/collectionAgents/login
 // Public
 const loginCollectionAgent = asyncHandler(async (req, res) => {
-    const { Email, Password } = req.body;
-    const collectionAgent = await CollectionAgent.findOne({ Email });
+    let { Email, Password } = req.body;
+    let collectionAgent = await CollectionAgent.findOne({ Email });
     if (collectionAgent && (collectionAgent.Password === Password)) {
         res.status(200).json({
             _id: collectionAgent._id,

@@ -1,12 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
 
+
 // Login a customer
 // POST /api/customers/login
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
-    const { Email, Password } = req.body;
-    const customer = await Customer.findOne({ Email });
+    let { Email, Password } = req.body;
+    let customer = await Customer.findOne({ Email });
     if (customer && (customer.Password === Password)) {
         res.status(200).json({
             _id: customer._id,
@@ -30,19 +31,20 @@ const loginCustomer = asyncHandler(async (req, res) => {
     }
 });
 
+
 // Register a new customer
 // POST /api/customers
 // Public
 const registerCustomer = asyncHandler(async (req, res) => {
-    const details = Customer(req.body);
+    let details = Customer(req.body);
 
-    const customerExists = await Customer.findOne({ Email: details.Email });
+    let customerExists = await Customer.findOne({ Email: details.Email });
     if (customerExists) {
         res.status(400);
         throw new Error('Customer already exists');
     }
 
-    const customer = await Customer.create(req.body);
+    let customer = await Customer.create(req.body);
 
     if (customer) {
         res.status(200).json({
@@ -69,23 +71,64 @@ const registerCustomer = asyncHandler(async (req, res) => {
 
 });
 
-const getCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findOne(req.params.Email);
+
+// Get a customer
+// Get /api/customers/:Email
+// Public
+let getCustomer = asyncHandler(async (req, res) => {
+    let customer = await Customer.findOne(req.params.Email);
     if (customer) {
-        res.json(customer);
+        res.json({
+            Name: {
+                FirstName: customer.Name.FirstName,
+                LastName: customer.Name.LastName
+            },
+            Email: customer.Email,
+            Address: {
+                HouseNo: customer.Address.HouseNo,
+                Street: customer.Address.Street,
+                City: customer.Address.City,
+                State: customer.Address.State,
+                Pincode: customer.Address.Pincode
+            },
+            Contact: customer.Contact
+        });
     } else {
         res.status(404);
         throw new Error('Customer not found');
     }
 });
 
+// Update a customer
+// Update /api/customers/:id
+// Private
+
+const updateCustomer = asyncHandler(async (req, res) => {
+    let Email = req.body.Email;
+    let updatedCustomer = await Customer.findOneAndUpdate({Email}, {
+        Name: {
+            FirstName: req.body.FirstName,
+            LastName: req.body.LastName
+        },
+        Email : req.body.Email,
+        Address: {
+            HouseNo: req.body.HouseNo,
+            Street: req.body.Street,
+            City: req.body.City,
+            State: req.body.State,
+            Pincode: req.body.Pincode
+        },
+        Contact : req.body.Contact
+    }, {new : true});
+    res.status(200).json(updatedCustomer);
+});
 
 
 // Delete a customer
 // DELETE /api/customers/:id
 // Private/Admin
 const deleteCustomer = asyncHandler(async (req, res) => {
-    const customer = await Customer.findOneAndDelete(req.params.Email);
+    let customer = await Customer.findOneAndDelete(req.params.Email);
     if (customer) {
         res.json({ message: 'Customer removed' });
     } else {
@@ -94,4 +137,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginCustomer,registerCustomer, getCustomer, deleteCustomer };
+export { loginCustomer, registerCustomer, getCustomer, deleteCustomer, updateCustomer};
