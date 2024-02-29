@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
 
-
 // Login a customer
 // POST /api/customers/login
 // Public
@@ -104,7 +103,7 @@ let getCustomer = asyncHandler(async (req, res) => {
 // Private
 
 const updateCustomer = asyncHandler(async (req, res) => {
-    let Email = req.body.Email;
+    let Email = 'abc@gmail.com';
     let updatedCustomer = await Customer.findOneAndUpdate({Email}, {
         Name: {
             FirstName: req.body.FirstName,
