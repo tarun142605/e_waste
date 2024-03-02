@@ -15,8 +15,7 @@ const itemDetailsSchema = new mongoose.Schema({
     ItemCondition: {
         type: String,
         enum: ['Good', 'Average', 'Worst'],
-        default: 'Good',
-        required: true
+        default: 'Good'
     },
     ItemWeight: {
         type: Number,
@@ -26,10 +25,6 @@ const itemDetailsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ItemPrice: {
-        type: Number,
-        required: true
-    }
 }, {
     timestamps: true
 });
