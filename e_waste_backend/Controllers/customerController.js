@@ -2,8 +2,9 @@ import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
 
 var CustomerID;
+
 // Login a customer
-// POST /api/customers/login
+// POST /api/customers
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
     let { Email, Password } = req.body;
@@ -11,7 +12,6 @@ const loginCustomer = asyncHandler(async (req, res) => {
     if (customer && (customer.Password === Password)) {
         CustomerID = customer._id;
         res.status(200).json({
-            _id: customer._id,
             FirstName: customer.FirstName,
             LastName: customer.LastName,
             Email: customer.Email,
@@ -66,12 +66,12 @@ const registerCustomer = asyncHandler(async (req, res) => {
 
 
 // Get a customer
-// Get /api/customers/:Email
+// Get /api/customers
 // Public
 let getCustomer = asyncHandler(async (req, res) => {
-    let customer = await Customer.findOne(req.params.Email);
+    let customer = await Customer.findById(CustomerID);
     if (customer) {
-        res.json({
+        res.status(200).json({
             FirstName: customer.FirstName,
             LastName: customer.LastName,
             Email: customer.Email,
@@ -89,7 +89,7 @@ let getCustomer = asyncHandler(async (req, res) => {
 });
 
 // Update a customer
-// Update /api/customers/:id
+// PUT /api/customers
 // Private
 
 const updateCustomer = asyncHandler(async (req, res) => {
@@ -109,7 +109,7 @@ const updateCustomer = asyncHandler(async (req, res) => {
 
 
 // Delete a customer
-// DELETE /api/customers/:id
+// DELETE /api/customers
 // Private/Admin
 const deleteCustomer = asyncHandler(async (req, res) => {
     let customer = await Customer.findByIdAndDelete(CustomerID);

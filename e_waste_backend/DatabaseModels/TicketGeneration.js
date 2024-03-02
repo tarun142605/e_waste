@@ -4,63 +4,57 @@ const ticketGenerationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Customer: {
-        CustomerID: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Customer',
-            required: true
-        },
-        CustomerName: {
-            type: String,
-            required: true
-        },
-        CustomerContact: {
-            type: String,
-            required: true
-        }
+    CustomerID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+        required: true
     },
-    CollectionAddress: {
-        HouseNo: {
-            type: String,
-            required: true
-        },
-        Street: {
-            type: String,
-            required: true
-        },
-        City: {
-            type: String,
-            required: true
-        },
-        State: {
-            type: String,
-            required: true
-        },
-        Pincode: {
-            type: String,
-            required: true
-        }
+    CustomerName: {
+        type: String,
+        required: true
+    },
+    CustomerContact: {
+        type: String,
+        required: true
+    },
+    HouseNo: {
+        type: String,
+        required: true
+    },
+    Street: {
+        type: String,
+        required: true
+    },
+    City: {
+        type: String,
+        required: true
+    },
+    State: {
+        type: String,
+        required: true
+    },
+    Pincode: {
+        type: String,
+        required: true
     },
     ItemID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ItemDetails',
         required: true
     },
-    CollectionAgent: {
-        CollectionAgentID: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'CollectionAgent'
-        },
-        CollectionAgentName: {
-            type: String
-        },
-        CollectionAgentContact: {
-            type: String
-        }
+    CollectionAgentID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CollectionAgent'
+    },
+    CollectionAgentName: {
+        type: String
+    },
+    CollectionAgentContact: {
+        type: String
     },
     TicketStatus: {
         type: String,
-        enum: ['Pending','Scheduled', 'Accepted', 'Rejected'],
+        enum: ['Pending', 'Scheduled', 'Accepted', 'Rejected'],
         default: 'Pending',
         required: true
     },

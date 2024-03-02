@@ -4,25 +4,23 @@ const itemDetailsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ItemDescription: {
-        ItemCategory: {
-            type: String,
-            required: true
-        },
-        ItemModelNo: {
-            type: String,
-            required: true
-        },
-        ItemCondition: {
-            type: String,
-            enum: ['Good', 'Average', 'Worst'],
-            default: 'Good',
-            required: true
-        },
-        ItemWeight: {
-            type: Number,
-            required: true
-        }
+    ItemCategory: {
+        type: String,
+        required: true
+    },
+    ItemModelNo: {
+        type: String,
+        required: true
+    },
+    ItemCondition: {
+        type: String,
+        enum: ['Good', 'Average', 'Worst'],
+        default: 'Good',
+        required: true
+    },
+    ItemWeight: {
+        type: Number,
+        required: true
     },
     ItemImage: {
         type: String,

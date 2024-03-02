@@ -45,7 +45,7 @@ const collectionAgentSchema = new mongoose.Schema({
     IdentityProofImage: {
         data: Buffer,
         type: String,
-        required: true
+        // required: true
     },
     Contact: {
         type: String,
