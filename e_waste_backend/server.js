@@ -2,6 +2,7 @@ import express from 'express';
 import dbConnect from './Config/dbConnect.js';
 import customerRoute from './Routes/customerRoutes.js';
 import collectionAgentRoute from './Routes/collectionAgentRoutes.js';
+import addRemoveItemRoute from './Routes/addRemoveItem.js';
 import cors from 'cors';
 
 const app = express();
@@ -13,6 +14,7 @@ dbConnect();
 
 app.use('/customer', customerRoute);
 app.use('/collectionAgent', collectionAgentRoute);
+app.use('/addRemoveItem', addRemoveItemRoute);
 
 app.get('/', (req, res) => {
     res.send('Server is ready');
