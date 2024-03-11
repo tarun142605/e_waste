@@ -7,7 +7,7 @@ import itemDetails from "../DatabaseModels/itemDetailsModel.js";
 const addProduct = asyncHandler(async (req, res) => {
     let product = new itemDetails(req.body);
     const createdProduct = await itemDetails.create(product);
-    if(createdProduct){
+    if (createdProduct) {
         res.status(200).json({
             ItemName: createdProduct.ItemName,
             ItemCategory: createdProduct.ItemCategory,
@@ -15,10 +15,10 @@ const addProduct = asyncHandler(async (req, res) => {
             ItemWeight: createdProduct.ItemWeight,
             ItemImage: createdProduct.ItemImage
         });
-    }else{
+    } else {
         res.status(404).send("Item not created");
     }
-    
+
 });
 
 // Get all products
@@ -36,8 +36,9 @@ const getProducts = asyncHandler(async (req, res) => {
 // Update products
 // PUT /api/updateProduct
 // private/public
-const updateProducts = asyncHandler((req,res)=>{
-    let itemID = ite
+const updateProducts = asyncHandler(async (req, res) => {
+    console.log(req.params.id);
+    res.send('done');
 });
 
 // Remove a product
@@ -54,4 +55,4 @@ const removeProduct = asyncHandler(async (req, res) => {
     }
 });
 
-export {addProduct, removeProduct, getProducts};
+export { addProduct, removeProduct, getProducts, updateProducts };
