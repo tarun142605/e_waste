@@ -5,16 +5,39 @@ import itemDetails from "../DatabaseModels/itemDetailsModel.js";
 // POST /api/itemDetails
 // Public
 const addProduct = asyncHandler(async (req, res) => {
-    let { ItemName, ItemCategory, ItemCondition, ItemWeight, ItemImage } = req.body;
-    let product = new itemDetails({
-        ItemName,
-        ItemCategory,
-        ItemCondition,
-        ItemWeight,
-        ItemImage
-    });
-    const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
+    let product = new itemDetails(req.body);
+    const createdProduct = await itemDetails.create(product);
+    if(createdProduct){
+        res.status(200).json({
+            ItemName: createdProduct.ItemName,
+            ItemCategory: createdProduct.ItemCategory,
+            ItemCondition: createdProduct.ItemCondition,
+            ItemWeight: createdProduct.ItemWeight,
+            ItemImage: createdProduct.ItemImage
+        });
+    }else{
+        res.status(404).send("Item not created");
+    }
+    
+});
+
+// Get all products
+// GET /api/getProducts
+// private/public
+const getProducts = asyncHandler(async (req, res) => {
+    let products = await itemDetails.find();
+    if (products) {
+        res.status(200).json(products);
+    } else {
+        res.status(404).send('Products not found');
+    }
+});
+
+// Update products
+// PUT /api/updateProduct
+// private/public
+const updateProducts = asyncHandler((req,res)=>{
+    let itemID = ite
 });
 
 // Remove a product
@@ -31,4 +54,4 @@ const removeProduct = asyncHandler(async (req, res) => {
     }
 });
 
-export { addProduct, removeProduct };
+export {addProduct, removeProduct, getProducts};
