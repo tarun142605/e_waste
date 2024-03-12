@@ -1,13 +1,13 @@
 import asyncHandler from "express-async-handler";
 import itemDetails from "../DatabaseModels/itemDetailsModel.js";
 
-// Add a new product
+// Add a new item
 // POST /api/itemDetails
 // Public
-const addProduct = asyncHandler(async (req, res) => {
-    let product = new itemDetails(req.body);
-    const createdProduct = await itemDetails.create(product);
-    if (createdProduct) {
+const addItem = asyncHandler(async (req, res) => {
+    let item = new itemDetails(req.body);
+    const createdItem = await itemDetails.create(item);
+    if (createdItem) {
         res.status(200).json({
             ItemName: createdProduct.ItemName,
             ItemCategory: createdProduct.ItemCategory,
@@ -21,24 +21,24 @@ const addProduct = asyncHandler(async (req, res) => {
 
 });
 
-// Get all products
-// GET /api/getProducts
+// Get all item
+// GET /api/getItem
 // private/public
-const getProducts = asyncHandler(async (req, res) => {
-    let products = await itemDetails.find();
-    if (products) {
-        res.status(200).json(products);
+const getItems = asyncHandler(async (req, res) => {
+    let items = await itemDetails.find();
+    if (items) {
+        res.status(200).json(items);
     } else {
         res.status(404).send('Products not found');
     }
 });
 
-// Update products
-// PUT /api/updateProduct
+// Update item
+// PUT /api/updateItem
 // private/public
-const updateProducts = asyncHandler(async (req, res) => {
-    let productID = req.query.id;
-    let product = await itemDetails.findByIdAndUpdate({
+const updateItem = asyncHandler(async (req, res) => {
+    let itemID = req.query.id;
+    let product = await itemDetails.findByIdAndUpdate(itemID,{
         ItemName: req.body.ItemName,
         ItemCategory: req.body.ItemCategory,
         ItemCondition: req.body.ItemCondition,
@@ -52,11 +52,11 @@ const updateProducts = asyncHandler(async (req, res) => {
     }
 });
 
-// Remove a product
+// Remove a item
 // DELETE /api/itemDetails/:id
 // Public
-const removeProduct = asyncHandler(async (req, res) => {
-    let product = await itemDetails.findById(req.params.id);
+const removeItem = asyncHandler(async (req, res) => {
+    let product = await itemDetails.findById(req.query.id);
     if (product) {
         await product.remove();
         res.json({ message: 'Product removed' });
@@ -66,4 +66,4 @@ const removeProduct = asyncHandler(async (req, res) => {
     }
 });
 
-export { addProduct, removeProduct, getProducts, updateProducts };
+export { addItem, getItems, updateItem, removeItem };
