@@ -12,6 +12,6 @@ router.delete("/removeItem", removeProduct);
 router.get('/getProducts', getProducts);
 
 // Route URL for update product
-router.put('/updateProduct/:id', updateProducts);
+router.put('/updateProduct', updateProducts);
 
 export default router;

@@ -37,8 +37,19 @@ const getProducts = asyncHandler(async (req, res) => {
 // PUT /api/updateProduct
 // private/public
 const updateProducts = asyncHandler(async (req, res) => {
-    console.log(req.params.id);
-    res.send('done');
+    let productID = req.query.id;
+    let product = await itemDetails.findByIdAndUpdate({
+        ItemName: req.body.ItemName,
+        ItemCategory: req.body.ItemCategory,
+        ItemCondition: req.body.ItemCondition,
+        ItemWeight: req.body.ItemWeight,
+        ItemImage: req.body.ItemImage
+    });
+    if(product){
+        res.status(200).send('Product updated');
+    }else{
+        res.status(404).send('Some error occured');
+    }
 });
 
 // Remove a product
