@@ -6,7 +6,7 @@ import { addItem, getItems, updateItem, removeItem } from '../Controllers/addRem
 router.post("/addItem", addItem);
 
 // Route URL for get all products
-router.get('/getItem', getItems);
+router.get('/getItems', getItems);
 
 // Route URL for update product
 router.put('/updateItem', updateItem);

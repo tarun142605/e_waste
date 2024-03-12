@@ -55,14 +55,13 @@ const updateItem = asyncHandler(async (req, res) => {
 // Remove a item
 // DELETE /api/itemDetails/:id
 // Public
-const removeItem = asyncHandler(async (req, res) => {
-    let product = await itemDetails.findById(req.query.id);
-    if (product) {
-        await product.remove();
-        res.json({ message: 'Product removed' });
-    } else {
-        res.status(404);
-        throw new Error('Product not found');
+const removeItem = asyncHandler(async (req, res)=>{
+    let itemID = req.query.id;
+    let removedItem = await itemDetails.findByIdAndDelete(itemID);
+    if(removedItem){
+        res.status(200).send('Item removed');
+    }else{
+        res.status(404).send('Item not removed');
     }
 });
 
