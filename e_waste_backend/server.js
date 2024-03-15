@@ -4,6 +4,8 @@ import customerRoute from './Routes/customerRoutes.js';
 import collectionAgentRoute from './Routes/collectionAgentRoutes.js';
 import addRemoveItemRoute from './Routes/addRemoveItem.js';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 

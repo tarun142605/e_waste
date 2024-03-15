@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 var CustomerID;
 
@@ -13,7 +14,7 @@ const loginCustomer = asyncHandler(async (req, res) => {
     if (customer) {
         if (bcrypt.compare(Password, customer.Password)) {
             CustomerID = customer._id;
-            res.status(200).json({
+            let accesToken = jwt.sign({
                 FirstName: customer.FirstName,
                 LastName: customer.LastName,
                 Email: customer.Email,
@@ -23,7 +24,8 @@ const loginCustomer = asyncHandler(async (req, res) => {
                 State: customer.State,
                 Pincode: customer.Pincode,
                 Contact: customer.Contact
-            });
+            }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1m' }); 
+            res.status(200).json({ accesToken });
         } else {
             res.status(400);
             throw new Error('Invalid email or password');
