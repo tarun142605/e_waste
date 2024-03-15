@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Customer from '../DatabaseModels/customerModel.js';
+import bcrypt from 'bcrypt';
 
 var CustomerID;
 
@@ -9,22 +10,24 @@ var CustomerID;
 const loginCustomer = asyncHandler(async (req, res) => {
     let { Email, Password } = req.body;
     let customer = await Customer.findOne({ Email });
-    if (customer && (customer.Password === Password)) {
-        CustomerID = customer._id;
-        res.status(200).json({
-            FirstName: customer.FirstName,
-            LastName: customer.LastName,
-            Email: customer.Email,
-            HouseNo: customer.HouseNo,
-            Street: customer.Street,
-            City: customer.City,
-            State: customer.State,
-            Pincode: customer.Pincode,
-            Contact: customer.Contact
-        });
-    } else {
-        res.status(400);
-        throw new Error('Invalid email or password');
+    if (customer) {
+        if (bcrypt.compare(Password, customer.Password)) {
+            CustomerID = customer._id;
+            res.status(200).json({
+                FirstName: customer.FirstName,
+                LastName: customer.LastName,
+                Email: customer.Email,
+                HouseNo: customer.HouseNo,
+                Street: customer.Street,
+                City: customer.City,
+                State: customer.State,
+                Pincode: customer.Pincode,
+                Contact: customer.Contact
+            });
+        } else {
+            res.status(400);
+            throw new Error('Invalid email or password');
+        }
     }
 });
 
@@ -40,8 +43,19 @@ const registerCustomer = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Customer already exists');
     }
-
-    let customer = await Customer.create(req.body);
+    let hashedPass = await bcrypt.hash(req.body.Password, 10);
+    let customer = await Customer.create({
+        FirstName: req.body.FirstName,
+        LastName: req.body.LastName,
+        Email: req.body.Email,
+        HouseNo: req.body.HouseNo,
+        Street: req.body.Street,
+        City: req.body.City,
+        State: req.body.State,
+        Pincode: req.body.Pincode,
+        Contact: req.body.Contact,
+        Password: hashedPass
+    });
 
     if (customer) {
         res.status(200).json({

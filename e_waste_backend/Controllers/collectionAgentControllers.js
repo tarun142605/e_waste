@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
+import bcrypt from 'bcrypt';
 
 var collectionAgentID;
 
@@ -9,25 +10,24 @@ var collectionAgentID;
 const loginCollectionAgent = asyncHandler(async (req, res) => {
     let { Email, Password } = req.body;
     let collectionAgent = await CollectionAgent.findOne({ Email });
-    if (collectionAgent && (collectionAgent.Password === Password)) {
-        collectionAgentID = collectionAgent._id;
-        res.status(200).json({
-            FirstName: collectionAgent.FirstName,
-            LastName: collectionAgent.LastName,
-            Email: collectionAgent.Email,
-            HouseNo: collectionAgent.HouseNo,
-            Street: collectionAgent.Street,
-            City: collectionAgent.City,
-            State: collectionAgent.State,
-            Pincode: collectionAgent.Pincode,
-            IdentityProofType: collectionAgent.IdentityProofType,
-            IdentityProofNo: collectionAgent.IdentityProofNo,
-            //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-            Contact: collectionAgent.Contact
-        });
-    } else {
-        res.status(400);
-        throw new Error('Invalid email or password');
+    if (collectionAgent) {
+        if (bcrypt.compare(Password, collectionAgent.Password)) {
+            collectionAgentID = collectionAgent._id;
+            res.status(200).json({
+                FirstName: collectionAgent.FirstName,
+                LastName: collectionAgent.LastName,
+                Email: collectionAgent.Email,
+                HouseNo: collectionAgent.HouseNo,
+                Street: collectionAgent.Street,
+                City: collectionAgent.City,
+                State: collectionAgent.State,
+                Pincode: collectionAgent.Pincode,
+                IdentityProofType: collectionAgent.IdentityProofType,
+                IdentityProofNo: collectionAgent.IdentityProofNo,
+                //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
+                Contact: collectionAgent.Contact
+            });
+        }
     }
 });
 
@@ -42,8 +42,22 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Collection Agent already exists');
     }
-
-    let collectionAgent = await CollectionAgent.create(req.body);
+    let hashedPass = bcrypt(req.body.Password, 10);
+    let collectionAgent = await CollectionAgent.create({
+        FirstName: req.body.FirstName,
+        LastName: req.body.LastName,
+        Email: req.body.Email,
+        HouseNo: req.body.HouseNo,
+        Street: req.body.Street,
+        City: req.body.City,
+        State: req.body.State,
+        Pincode: req.body.Pincode,
+        IdentityProofType: req.body.IdentityProofType,
+        IdentityProofNo: req.body.IdentityProofNo,
+        //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
+        Contact: req.body.Contact,
+        Password: hashedPass
+    });
 
     if (collectionAgent) {
         res.status(200).json({
