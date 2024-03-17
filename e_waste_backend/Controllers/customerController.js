@@ -6,25 +6,27 @@ import jwt from 'jsonwebtoken';
 var CustomerID;
 
 // Login a customer
-// POST /api/customers
+// GET /api/customers
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
     let { Email, Password } = req.body;
     let customer = await Customer.findOne({ Email });
     if (customer) {
-        if (bcrypt.compare(Password, customer.Password)) {
+        if (await bcrypt.compare(Password, customer.Password)) {
             CustomerID = customer._id;
             let accesToken = jwt.sign({
-                FirstName: customer.FirstName,
-                LastName: customer.LastName,
-                Email: customer.Email,
-                HouseNo: customer.HouseNo,
-                Street: customer.Street,
-                City: customer.City,
-                State: customer.State,
-                Pincode: customer.Pincode,
-                Contact: customer.Contact
-            }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1m' }); 
+                user: {
+                    FirstName: customer.FirstName,
+                    LastName: customer.LastName,
+                    Email: customer.Email,
+                    HouseNo: customer.HouseNo,
+                    Street: customer.Street,
+                    City: customer.City,
+                    State: customer.State,
+                    Pincode: customer.Pincode,
+                    Contact: customer.Contact
+                }
+            }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1m' });
             res.status(200).json({ accesToken });
         } else {
             res.status(400);
@@ -83,7 +85,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
 
 // Get a customer
 // Get /api/customers
-// Public
+// Private
 let getCustomer = asyncHandler(async (req, res) => {
     let customer = await Customer.findById(CustomerID);
     if (customer) {
