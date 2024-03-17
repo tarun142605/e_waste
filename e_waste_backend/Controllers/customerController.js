@@ -26,7 +26,7 @@ const loginCustomer = asyncHandler(async (req, res) => {
                     Pincode: customer.Pincode,
                     Contact: customer.Contact
                 }
-            }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1m' });
+            }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1d' });
             res.status(200).json({ accesToken });
         } else {
             res.status(400);
