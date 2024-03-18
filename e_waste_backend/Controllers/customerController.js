@@ -9,10 +9,10 @@ var CustomerID;
 // POST /api/customers
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
-    let { Email, Password } = req.body;
-    let customer = await Customer.findOne({ Email });
+    let { email, password } = req.body;
+    let customer = await Customer.findOne({ email });
     if (customer) {
-        if (bcrypt.compare(Password, customer.Password)) {
+        if (bcrypt.compare(password, customer.password)) {
             CustomerID = customer._id;
             let accesToken = jwt.sign({
                 FirstName: customer.FirstName,
