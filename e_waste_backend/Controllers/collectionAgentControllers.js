@@ -9,25 +9,25 @@ var collectionAgentID;
 // POST /api/collectionAgents
 // Public
 const loginCollectionAgent = asyncHandler(async (req, res) => {
-    let { Email, Password } = req.body;
-    let collectionAgent = await CollectionAgent.findOne({ Email });
+    let { email, password } = req.body;
+    let collectionAgent = await CollectionAgent.findOne({ email });
     if (collectionAgent) {
-        if (await bcrypt.compare(Password, collectionAgent.Password)) {
+        if (await bcrypt.compare(password, collectionAgent.password)) {
             collectionAgentID = collectionAgent._id;
             let accessToken = jwt.sign({
                 user: {
-                    FirstName: collectionAgent.FirstName,
-                    LastName: collectionAgent.LastName,
-                    Email: collectionAgent.Email,
-                    HouseNo: collectionAgent.HouseNo,
-                    Street: collectionAgent.Street,
-                    City: collectionAgent.City,
-                    State: collectionAgent.State,
-                    Pincode: collectionAgent.Pincode,
+                    firstName: collectionAgent.firstName,
+                    lastName: collectionAgent.lastName,
+                    email: collectionAgent.email,
+                    houseNo: collectionAgent.houseNo,
+                    street: collectionAgent.street,
+                    city: collectionAgent.city,
+                    state: collectionAgent.state,
+                    pincode: collectionAgent.pincode,
                     IdentityProofType: collectionAgent.IdentityProofType,
                     IdentityProofNo: collectionAgent.IdentityProofNo,
                     //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-                    Contact: collectionAgent.Contact
+                    contact: collectionAgent.contact
                 }
             }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1d' });
             res.status(200).json(accessToken);
@@ -41,43 +41,43 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
 const registerCollectionAgent = asyncHandler(async (req, res) => {
     let details = CollectionAgent(req.body);
 
-    let collectionAgentExists = await CollectionAgent.findOne({ Email: details.Email });
+    let collectionAgentExists = await CollectionAgent.findOne({ email: details.email });
     if (collectionAgentExists) {
         res.status(400);
         throw new Error('Collection Agent already exists');
     }
-    let hashedPass = await bcrypt.hash(req.body.Password, 10);
+    let hashedPass = await bcrypt.hash(req.body.password, 10);
     let collectionAgent = await CollectionAgent.create({
-        FirstName: req.body.FirstName,
-        LastName: req.body.LastName,
-        Email: req.body.Email,
-        HouseNo: req.body.HouseNo,
-        Street: req.body.Street,
-        City: req.body.City,
-        State: req.body.State,
-        Pincode: req.body.Pincode,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        houseNo: req.body.houseNo,
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        pincode: req.body.pincode,
         IdentityProofType: req.body.IdentityProofType,
         IdentityProofNo: req.body.IdentityProofNo,
         //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-        Contact: req.body.Contact,
-        Password: hashedPass
+        contact: req.body.contact,
+        password: hashedPass
     });
 
     if (collectionAgent) {
         res.status(200).json({
-            FirstName: collectionAgent.FirstName,
-            LastName: collectionAgent.LastName,
-            Email: collectionAgent.Email,
-            HouseNo: collectionAgent.HouseNo,
-            Street: collectionAgent.Street,
-            City: collectionAgent.City,
-            State: collectionAgent.State,
-            Pincode: collectionAgent.Pincode,
+            firstName: collectionAgent.firstName,
+            lastName: collectionAgent.lastName,
+            email: collectionAgent.email,
+            houseNo: collectionAgent.houseNo,
+            street: collectionAgent.street,
+            city: collectionAgent.city,
+            state: collectionAgent.state,
+            pincode: collectionAgent.pincode,
             IdentityProofType: collectionAgent.IdentityProofType,
             IdentityProofNo: collectionAgent.IdentityProofNo,
             //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-            Contact: collectionAgent.Contact,
-            Password: collectionAgent.Password
+            contact: collectionAgent.contact,
+            password: collectionAgent.password
         });
     } else {
         res.status(400);
@@ -93,18 +93,18 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
     let collectionAgent = await CollectionAgent.findById(collectionAgentID);
     if (collectionAgent) {
         res.status(200).json({
-            FirstName: collectionAgent.FirstName,
-            LastName: collectionAgent.LastName,
-            Email: collectionAgent.Email,
-            HouseNo: collectionAgent.HouseNo,
-            Street: collectionAgent.Street,
-            City: collectionAgent.City,
-            State: collectionAgent.State,
-            Pincode: collectionAgent.Pincode,
+            firstName: collectionAgent.firstName,
+            lastName: collectionAgent.lastName,
+            email: collectionAgent.email,
+            houseNo: collectionAgent.houseNo,
+            street: collectionAgent.street,
+            city: collectionAgent.city,
+            state: collectionAgent.state,
+            pincode: collectionAgent.pincode,
             IdentityProofType: collectionAgent.IdentityProofType,
             IdentityProofNo: collectionAgent.IdentityProofNo,
             //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-            Contact: collectionAgent.Contact
+            contact: collectionAgent.contact
         });
     } else {
         res.status(404);
@@ -117,18 +117,18 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
 // Public
 const updateCollectionAgent = asyncHandler(async (req, res) => {
     let updatedCollectionAgent = await CollectionAgent.findByIdAndUpdate(collectionAgentID, {
-        FirstName: req.body.FirstName,
-        LastName: req.body.LastName,
-        Email: req.body.Email,
-        HouseNo: req.body.HouseNo,
-        Street: req.body.Street,
-        City: req.body.City,
-        State: req.body.State,
-        Pincode: req.body.Pincode,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        houseNo: req.body.houseNo,
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        pincode: req.body.pincode,
         IdentityProofType: req.body.IdentityProofType,
         IdentityProofNo: req.body.IdentityProofNo,
         //IdentityProofImage: req.body.IdentityProofImage
-        Contact: req.body.Contact,
+        contact: req.body.contact,
     }, { new: true });
     res.status(200).json(updatedCollectionAgent);
 });

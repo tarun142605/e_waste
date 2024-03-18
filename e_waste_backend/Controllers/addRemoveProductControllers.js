@@ -9,11 +9,11 @@ const addItem = asyncHandler(async (req, res) => {
     const createdItem = await itemDetails.create(item);
     if (createdItem) {
         res.status(200).json({
-            ItemName: createdProduct.ItemName,
-            ItemCategory: createdProduct.ItemCategory,
-            ItemCondition: createdProduct.ItemCondition,
-            ItemWeight: createdProduct.ItemWeight,
-            ItemImage: createdProduct.ItemImage
+            itemName: createdProduct.itemName,
+            itemCategory: createdProduct.itemCategory,
+            itemCondition: createdProduct.itemCondition,
+            itemWeight: createdProduct.itemWeight,
+            itemImage: createdProduct.itemImage
         });
     } else {
         res.status(404).send("Item not created");
@@ -39,11 +39,11 @@ const getItems = asyncHandler(async (req, res) => {
 const updateItem = asyncHandler(async (req, res) => {
     let itemID = req.query.id;
     let product = await itemDetails.findByIdAndUpdate(itemID,{
-        ItemName: req.body.ItemName,
-        ItemCategory: req.body.ItemCategory,
-        ItemCondition: req.body.ItemCondition,
-        ItemWeight: req.body.ItemWeight,
-        ItemImage: req.body.ItemImage
+        itemName: req.body.itemName,
+        itemCategory: req.body.itemCategory,
+        itemCondition: req.body.itemCondition,
+        itemWeight: req.body.itemWeight,
+        itemImage: req.body.itemImage
     });
     if(product){
         res.status(200).send('Product updated');

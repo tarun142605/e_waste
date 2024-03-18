@@ -1,27 +1,27 @@
 import mongoose from "mongoose";
 const adminSchema = new mongoose.Schema({
-    FirstName: {
+    firstName: {
         type: String,
         required: true
     },
-    LastName: {
+    lastName: {
         type: String,
         required: true
     },
-    Email: {
+    email: {
         type: String,
         required: true
     },
-    Contact: {
+    contact: {
         type: String,
         required: true
     },
-    UserName: {
+    userName: {
         type: String,
         unique: true,
         required: true
     },
-    Password: {
+    password: {
         type: String,
         required: true
     }
@@ -29,5 +29,5 @@ const adminSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Admin = mongoose.model('Admin', adminSchema);
-export default Admin;
+const admin = mongoose.model('Admin', adminSchema);
+export default admin;

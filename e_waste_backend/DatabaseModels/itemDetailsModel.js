@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
 const itemDetailsSchema = new mongoose.Schema({
-    ItemName: {
+    itemName: {
         type: String,
         required: true
     },
-    ItemCategory: {
+    itemCategory: {
         type: String,
         required: true
     },
-    ItemCondition: {
+    itemCondition: {
         type: String,
         enum: ['Good', 'Average', 'Worst'],
         default: 'Good',
         required: true
     },
-    ItemWeight: {
+    itemWeight: {
         type: Number,
         required: true
     },
-    ItemImage: {
+    itemImage: {
         type: String,
         required: true
     },
@@ -26,5 +26,5 @@ const itemDetailsSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const ItemDetails = mongoose.model('ItemDetails', itemDetailsSchema);
-export default ItemDetails;
+const itemDetails = mongoose.model('ItemDetails', itemDetailsSchema);
+export default itemDetails;

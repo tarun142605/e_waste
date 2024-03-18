@@ -1,59 +1,59 @@
 import mongoose from "mongoose";
 const collectionAgentSchema = new mongoose.Schema({
-    FirstName: {
+    firstName: {
         type: String,
         required: true
     },
-    LastName: {
+    lastName: {
         type: String,
         required: true
     },
-    Email: {
+    email: {
         type: String,
         required: true
     },
-    HouseNo: {
+    houseNo: {
         type: String,
         required: true
     },
-    Street: {
+    street: {
         type: String,
         required: true
     },
-    City: {
+    city: {
         type: String,
         required: true
     },
-    State: {
+    state: {
         type: String,
         required: true
     },
-    Pincode: {
+    pincode: {
         type: String,
         required: true
     },
-    IdentityProofType: {
+    identityProofType: {
         enum: ['Aadhar', 'VoterID', 'PAN'],
         type: String,
         default: 'PAN',
         required: true
     },
-    IdentityProofNo: {
+    identityProofNo: {
         type: String,
         required: true
     },
-    IdentityProofImage: {
+    identityProofImage: {
         data: Buffer,
         type: String,
         // required: true
     },
-    Contact: {
+    contact: {
         type: String,
         min: 10,
         max: 10,
         required: true
     },
-    Password: {
+    password: {
         type: String,
         required: true
     }
@@ -61,5 +61,5 @@ const collectionAgentSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const CollectionAgent = mongoose.model('CollectionAgent', collectionAgentSchema);
-export default CollectionAgent;
+const collectionAgent = mongoose.model('CollectionAgent', collectionAgentSchema);
+export default collectionAgent;

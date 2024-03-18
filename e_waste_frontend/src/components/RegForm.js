@@ -1,14 +1,14 @@
 // import myimage from '../images/image1.jpg';
-import React, { useState } from 'react';
+import React, { usestate } from 'react';
 
 function RegForm() {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = usestate({
         fname: '',
         lname: '',
         email: '',
         mobile: '',
         password: '',
-        repeatPassword: '',
+        repeatpassword: '',
         address: ''
       });
 
@@ -28,7 +28,7 @@ function RegForm() {
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
+      if (this.readystate === 4 && this.status === 200) {
         let data = JSON.parse(this.responseText);
         console.log(data);
       }
@@ -62,7 +62,7 @@ function RegForm() {
                 </div>
             </div>
             <div className="mb-3">
-                <label>Email</label>
+                <label>email</label>
                 <input type="email" className="input-field" value={formData.email} onChange={handleChange} name="email"  />
             </div>
             <div className="mb-3">
@@ -76,23 +76,23 @@ function RegForm() {
 
             <div className="row">
                 <div className="col-sm-6 mb-3">
-                    <label>City</label>
+                    <label>city</label>
                     <input type="text" name="city" id="pwd" value={formData.city} onChange={handleChange} className="input-field" />
                 </div>
                 <div className="col-sm-6 mb-3">
                     <label>Pin Code</label>
-                    <input type="number" name="pinCode" id="cpwd" value={formData.pinCode} onChange={handleChange} className="input-field" />
+                    <input type="number" name="pincode" id="cpwd" value={formData.pincode} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             
             <div className="row">
                 <div className="col-sm-6 mb-3">
-                    <label>Password</label>
+                    <label>password</label>
                     <input type="password" name="password" id="pwd" value={formData.password} onChange={handleChange} className="input-field" />
                 </div>
                 <div className="col-sm-6 mb-3">
-                    <label>Current Password</label>
-                    <input type="password" name="repeatPassword" id="cpwd" value={formData.repeatPassword} onChange={handleChange} className="input-field" />
+                    <label>Current password</label>
+                    <input type="password" name="repeatpassword" id="cpwd" value={formData.repeatpassword} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             <div className="mb-3">

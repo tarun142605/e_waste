@@ -1,88 +1,88 @@
 import mongoose from "mongoose";
 const ticketGenerationSchema = new mongoose.Schema({
-    TicketNo: {
+    ticketNo: {
         type: String,
         required: true
     },
-    CustomerID: {
+    customerID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
         required: true
     },
-    CustomerName: {
+    customerName: {
         type: mongoose.Schema.Types.Name,
         ref: 'Customer',
         required: true
     },
-    CustomerContact: {
-        type: mongoose.Schema.Types.Contact,
+    customercontact: {
+        type: mongoose.Schema.Types.contact,
         ref: 'Customer',
         required: true
     },
-    HouseNo: {
-        type: mongoose.Schema.Types.HouseNo,
+    houseNo: {
+        type: mongoose.Schema.Types.houseNo,
         ref: 'Customer',
         required: true
     },
-    Street: {
-        type: mongoose.Schema.Types.Street,
+    street: {
+        type: mongoose.Schema.Types.street,
         ref: 'Customer',
         required: true
     },
-    City: {
-        type: mongoose.Schema.Types.City,
+    city: {
+        type: mongoose.Schema.Types.city,
         ref: 'Customer',
         required: true
     },
-    State: {
-        type: mongoose.Schema.Types.State,
+    state: {
+        type: mongoose.Schema.Types.state,
         ref: 'Customer',
         required: true
     },
-    Pincode: {
-        type: mongoose.Schema.Types.Pincode,
+    pincode: {
+        type: mongoose.Schema.Types.pincode,
         ref: 'Customer',
         required: true
     },
-    ItemID: {
+    itemID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ItemDetails',
         required: true
     },
-    CollectionAgentID: {
+    collectionAgentID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CollectionAgent'
     },
-    CollectionAgentName: {
+    collectionAgentName: {
         type: String
     },
-    CollectionAgentContact: {
+    collectionAgentcontact: {
         type: String
     },
-    TicketStatus: {
+    ticketStatus: {
         type: String,
         enum: ['Pending', 'Scheduled', 'Accepted', 'Rejected'],
         default: 'Pending',
         required: true
     },
-    Price: {
+    price: {
         type: Number,
         required: true
     },
-    PickupDate: {
+    pickupDate: {
         type: Date,
         required: true
     },
-    CollectionTime: {
+    collectionTime: {
         type: String,
         required: true
     },
-    CollectionRemarks: {
+    collectionRemarks: {
         type: String
     }
 }, {
     timestamps: true
 });
 
-const TicketGeneration = mongoose.model('TicketGeneration', ticketGenerationSchema);
-export default TicketGeneration;
+const ticketGeneration = mongoose.model('TicketGeneration', ticketGenerationSchema);
+export default ticketGeneration;
