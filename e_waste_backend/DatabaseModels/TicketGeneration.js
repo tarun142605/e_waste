@@ -54,10 +54,12 @@ const ticketGenerationSchema = new mongoose.Schema({
         ref: 'CollectionAgent'
     },
     collectionAgentName: {
-        type: String
+        type: String,
+        required: true
     },
     collectionAgentcontact: {
-        type: String
+        type: String,
+        required: true
     },
     ticketStatus: {
         type: String,

@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { addItem, getItems, updateItem, removeItem } from '../Controllers/addRemoveProductControllers.js';
+import { createItem, getItems, updateItem, removeItem } from '../Controllers/addRemoveProductControllers.js';
 
 // Route URL for add item
-router.post("/addItem", addItem);
+router.post("/addItem", createItem);
 
 // Route URL for get all products
 router.get('/getItems', getItems);

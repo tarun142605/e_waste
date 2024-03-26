@@ -4,7 +4,7 @@ import itemDetails from "../DatabaseModels/itemDetailsModel.js";
 // Add a new item
 // POST /api/itemDetails
 // Public
-const addItem = asyncHandler(async (req, res) => {
+const createItem = asyncHandler(async (req, res) => {
     let item = new itemDetails(req.body);
     const createdItem = await itemDetails.create(item);
     if (createdItem) {
@@ -65,4 +65,4 @@ const removeItem = asyncHandler(async (req, res)=>{
     }
 });
 
-export { addItem, getItems, updateItem, removeItem };
+export { createItem, getItems, updateItem, removeItem };
