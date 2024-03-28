@@ -49,6 +49,11 @@ const ticketGenerationSchema = new mongoose.Schema({
         ref: 'ItemDetails',
         required: true
     },
+    itemImage: {
+        data: Buffer,
+        type: String,
+        required: true
+    },
     collectionAgentID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CollectionAgent'
@@ -74,13 +79,6 @@ const ticketGenerationSchema = new mongoose.Schema({
     pickupDate: {
         type: Date,
         required: true
-    },
-    collectionTime: {
-        type: String,
-        required: true
-    },
-    collectionRemarks: {
-        type: String
     }
 }, {
     timestamps: true
