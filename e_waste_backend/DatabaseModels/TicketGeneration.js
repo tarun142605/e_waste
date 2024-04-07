@@ -44,16 +44,13 @@ const ticketGenerationSchema = new mongoose.Schema({
         ref: 'Customer',
         required: true
     },
-    itemID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ItemDetails',
-        required: true
-    },
-    itemImage: {
-        data: Buffer,
-        type: String,
-        required: true
-    },
+    items: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ItemDetails',
+            required: true
+        }
+    ],
     collectionAgentID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CollectionAgent'

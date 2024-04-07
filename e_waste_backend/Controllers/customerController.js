@@ -139,4 +139,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer };
+export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customerID };
