@@ -3,7 +3,7 @@ import Customer from '../DatabaseModels/customerModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-var customerID;
+var customer_ID;
 
 // Login a customer
 // GET /api/customers
@@ -13,7 +13,7 @@ const loginCustomer = asyncHandler(async (req, res) => {
     let customer = await Customer.findOne({ email });
     if (customer) {
         if (bcrypt.compare(password, customer.password)) {
-            customerID = customer._id;
+            customer_ID = customer._id;
             let accesToken = jwt.sign({
                 user: {
                     firstName: customer.firstName,
@@ -87,7 +87,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
 // Get /api/customers
 // Private
 let getCustomer = asyncHandler(async (req, res) => {
-    let customer = await Customer.findById(customerID);
+    let customer = await Customer.findById(customer_ID);
     if (customer) {
         res.status(200).json({
             firstName: customer.firstName,
@@ -139,4 +139,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customerID };
+export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customer_ID };

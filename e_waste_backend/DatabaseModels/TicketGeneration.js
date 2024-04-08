@@ -5,63 +5,49 @@ const ticketGenerationSchema = new mongoose.Schema({
         required: true
     },
     customerID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     customerName: {
-        type: mongoose.Schema.Types.Name,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     customercontact: {
-        type: mongoose.Schema.Types.contact,
-        ref: 'Customer',
+        type: Number,
         required: true
     },
     houseNo: {
-        type: mongoose.Schema.Types.houseNo,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     street: {
-        type: mongoose.Schema.Types.street,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     city: {
-        type: mongoose.Schema.Types.city,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     state: {
-        type: mongoose.Schema.Types.state,
-        ref: 'Customer',
+        type: String,
         required: true
     },
     pincode: {
-        type: mongoose.Schema.Types.pincode,
-        ref: 'Customer',
+        type: String,
         required: true
     },
-    items: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'ItemDetails',
-            required: true
-        }
-    ],
+    itemID: {
+        type: String,
+        required: true
+    },
     collectionAgentID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'CollectionAgent'
+        type: String,
     },
     collectionAgentName: {
         type: String,
-        required: true
     },
     collectionAgentcontact: {
         type: String,
-        required: true
     },
     ticketStatus: {
         type: String,
@@ -71,11 +57,9 @@ const ticketGenerationSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        required: true
     },
     pickupDate: {
         type: Date,
-        required: true
     }
 }, {
     timestamps: true
