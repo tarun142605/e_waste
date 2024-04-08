@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RegForm from './components/RegForm';
 import Nav from './components/Nav';
+import Custumer from './components/custumerDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Nav />
+    <Custumer />
   </React.StrictMode>
 );
 
