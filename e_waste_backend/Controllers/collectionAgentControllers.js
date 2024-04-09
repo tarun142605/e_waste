@@ -111,6 +111,19 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all collection agents
+// GET/api/collectionagent
+// amin
+const getAllCollectionAgents = asyncHandler(async (req, res) => {
+    let collectionAgents = await CollectionAgent.find();
+    if (collectionAgents) {
+        res.status(200).json(collectionAgents);
+    } else {
+        res.status(401);
+        throw new Error('invalid request');
+    }
+});
+
 // Update collection agent details
 // PUT /api/collectionAgents
 // Public
@@ -142,4 +155,4 @@ const deleteCollectionAgent = asyncHandler(async (req, res) => {
         throw new Error('Collection Agent not found');
     }
 });
-export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent, updateCollectionAgent, collectionAgent_ID };
+export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent, updateCollectionAgent, collectionAgent_ID, getAllCollectionAgents };

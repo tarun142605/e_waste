@@ -1,9 +1,15 @@
 import express from "express";
 const router = express.Router();
-import { getTicketByCustomerID, createTicket, updateTicket} from "../Controllers/ticketController.js";
+import { getTicketByCustomerID, createTicket, updateTicket, getAllTickets, getTicketByCollectionAgentID } from "../Controllers/ticketController.js";
+
+// Route URL for getting all the tickets for collectionagents
+router.get('/getTickets', getAllTickets);
 
 // Route URL for gettig ticktes by customer id
-router.get('/getTickets', getTicketByCustomerID);
+router.get('/getTicketByCustomerID', getTicketByCustomerID);
+
+// Route URL for gettig ticktes by customer id
+router.get('/getTicketByCollectionAgentID', getTicketByCollectionAgentID);
 
 // Route URL for creating ticket
 router.post('/createTicket', createTicket);

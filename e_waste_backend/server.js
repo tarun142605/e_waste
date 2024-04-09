@@ -5,6 +5,7 @@ import customerRoute from './Routes/customerRoutes.js';
 import collectionAgentRoute from './Routes/collectionAgentRoutes.js';
 import addRemoveItemRoute from './Routes/addRemoveItemsRoutes.js';
 import ticketRoute from './Routes/ticketsRoutes.js';
+import adminRoute from './Routes/adminRoutes.js'
 import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -21,6 +22,7 @@ app.use('/customer', customerRoute);
 app.use('/collectionAgent', collectionAgentRoute);
 app.use('/addRemoveItem', addRemoveItemRoute);
 app.use('/ticket', ticketRoute);
+app.use('/admin', adminRoute)
 
 app.get('/', (req, res) => {
     res.send('Server is ready');

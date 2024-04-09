@@ -7,6 +7,19 @@ import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 import ItemDetails from "../DatabaseModels/itemDetailsModel.js";
 import cryptoRandomString from 'crypto-random-string';
 
+// Get all the tickets
+// GET/api/tickets
+//public
+const getAllTickets = asyncHandler(async (req, res) => {
+    let tickets = await Ticket.find();
+    if(tickets){
+        res.status(200).json(tickets);
+    }else{
+        res.status(401);
+        throw new Error("invalid request");
+    }
+});
+
 // Get all tickets by custome_id
 // GET/api/tickets
 // public
@@ -92,4 +105,4 @@ const updateTicket = asyncHandler(async (req, res) => {
     }
 });
 
-export { getTicketByCustomerID, getTicketByCollectionAgentID, createTicket, updateTicket };
+export { getTicketByCustomerID, getTicketByCollectionAgentID, createTicket, updateTicket, getAllTickets};

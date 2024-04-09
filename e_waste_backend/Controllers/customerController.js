@@ -106,6 +106,19 @@ let getCustomer = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all customers
+// GET/api/customers
+// admin
+const getAllCustomers = asyncHandler(async (req, res) => {
+    let customers = await Customer.find();
+    if(customers){
+        res.status(200).json(customers);
+    }else{
+        res.status(401);
+        throw new Error("invalid request");
+    }
+});
+
 // Update a customer
 // PUT /api/customers
 // Private
@@ -139,4 +152,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customer_ID };
+export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customer_ID, getAllCustomers};
