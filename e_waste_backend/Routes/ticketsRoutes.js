@@ -1,11 +1,14 @@
 import express from "express";
 const router = express.Router();
-import { getTicketByID, createTicket } from "../Controllers/ticketController.js";
+import { getTicketByCustomerID, createTicket, updateTicket} from "../Controllers/ticketController.js";
 
 // Route URL for gettig ticktes by customer id
-router.get('/getTickets', getTicketByID);
+router.get('/getTickets', getTicketByCustomerID);
 
 // Route URL for creating ticket
 router.post('/createTicket', createTicket);
+
+// Route URL for updating ticket
+router.put('/updateTicket', updateTicket);
 
 export default router;

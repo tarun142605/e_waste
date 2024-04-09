@@ -5,7 +5,7 @@ import { collectionAgentValidator } from '../middleware/validateToken.js';
 const router = express.Router();
 
 // Route URL for Login for collection agent
-router.get('/loginCollectionAgent', loginCollectionAgent);
+router.post('/loginCollectionAgent', loginCollectionAgent);
 
 // Route URL for register collection agent
 router.post('/registerCollectionAgent', registerCollectionAgent);
