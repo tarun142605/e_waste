@@ -33,21 +33,34 @@ const getItems = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all items
+// GET/api/items
+// admin
+const getAllItems = asyncHandler(async (req, res) => {
+    let allItems = await itemDetails.find();
+    if (allItems) {
+        res.status(200).json(allItems);
+    } else {
+        res.status(401);
+        throw new Error('invalid request');
+    }
+});
+
 // Update item
 // PUT /api/updateItem
 // private/public
 const updateItem = asyncHandler(async (req, res) => {
     let itemID = req.query.id;
-    let product = await itemDetails.findByIdAndUpdate(itemID,{
+    let product = await itemDetails.findByIdAndUpdate(itemID, {
         itemName: req.body.itemName,
         itemCategory: req.body.itemCategory,
         itemCondition: req.body.itemCondition,
         itemWeight: req.body.itemWeight,
         itemImage: req.body.itemImage
     });
-    if(product){
+    if (product) {
         res.status(200).send('Product updated');
-    }else{
+    } else {
         res.status(404).send('Some error occured');
     }
 });
@@ -55,14 +68,14 @@ const updateItem = asyncHandler(async (req, res) => {
 // Remove a item
 // DELETE /api/itemDetails/:id
 // Public
-const removeItem = asyncHandler(async (req, res)=>{
+const removeItem = asyncHandler(async (req, res) => {
     let itemID = req.query.id;
     let removedItem = await itemDetails.findByIdAndDelete(itemID);
-    if(removedItem){
+    if (removedItem) {
         res.status(200).send('Item removed');
-    }else{
+    } else {
         res.status(404).send('Item not removed');
     }
 });
 
-export { createItem, getItems, updateItem, removeItem };
+export { createItem, getItems, updateItem, removeItem, getAllItems };

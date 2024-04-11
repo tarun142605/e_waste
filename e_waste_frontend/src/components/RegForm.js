@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 function RegForm() {
-
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
@@ -26,7 +25,7 @@ function RegForm() {
     e.preventDefault();
     // You can add your form submission logic here
     let conn = new XMLHttpRequest();
-    conn.open("POST", "http://localhost:8000/api/register", true);
+    conn.open("POST", "http://localhost:8000/custumer/registerCustumer", true);
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {

@@ -3,7 +3,7 @@ import CollectionAgent from '../DatabaseModels/collectionAgentModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-var collectionAgentID;
+var collectionAgent_ID;
 
 // Login a collection agent
 // POST /api/collectionAgents
@@ -13,7 +13,7 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
     let collectionAgent = await CollectionAgent.findOne({ email });
     if (collectionAgent) {
         if (await bcrypt.compare(password, collectionAgent.password)) {
-            collectionAgentID = collectionAgent._id;
+            collectionAgent_ID = collectionAgent._id;
             let accessToken = jwt.sign({
                 user: {
                     firstName: collectionAgent.firstName,
@@ -30,7 +30,7 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
                     contact: collectionAgent.contact
                 }
             }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1d' });
-            res.status(200).json(accessToken);
+            res.status(200).json({ accessToken });
         }
     }
 });
@@ -39,9 +39,8 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
 // POST /api/collectionAgents
 // Public
 const registerCollectionAgent = asyncHandler(async (req, res) => {
-    let details = CollectionAgent(req.body);
 
-    let collectionAgentExists = await CollectionAgent.findOne({ email: details.email });
+    let collectionAgentExists = await CollectionAgent.findOne({ email: req.body.email });
     if (collectionAgentExists) {
         res.status(400);
         throw new Error('Collection Agent already exists');
@@ -56,8 +55,8 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
         city: req.body.city,
         state: req.body.state,
         pincode: req.body.pincode,
-        IdentityProofType: req.body.IdentityProofType,
-        IdentityProofNo: req.body.IdentityProofNo,
+        identityProofType: req.body.identityProofType,
+        identityProofNo: req.body.identityProofNo,
         //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
         contact: req.body.contact,
         password: hashedPass
@@ -73,8 +72,8 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
             city: collectionAgent.city,
             state: collectionAgent.state,
             pincode: collectionAgent.pincode,
-            IdentityProofType: collectionAgent.IdentityProofType,
-            IdentityProofNo: collectionAgent.IdentityProofNo,
+            identityProofType: collectionAgent.identityProofType,
+            identityProofNo: collectionAgent.identityProofNo,
             //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
             contact: collectionAgent.contact,
             password: collectionAgent.password
@@ -90,7 +89,7 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
 // GET /api/collectionAgents
 // Public
 const getCollectionAgent = asyncHandler(async (req, res) => {
-    let collectionAgent = await CollectionAgent.findById(collectionAgentID);
+    let collectionAgent = await CollectionAgent.findById(collectionAgent_ID);
     if (collectionAgent) {
         res.status(200).json({
             firstName: collectionAgent.firstName,
@@ -112,11 +111,24 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all collection agents
+// GET/api/collectionagent
+// amin
+const getAllCollectionAgents = asyncHandler(async (req, res) => {
+    let collectionAgents = await CollectionAgent.find();
+    if (collectionAgents) {
+        res.status(200).json(collectionAgents);
+    } else {
+        res.status(401);
+        throw new Error('invalid request');
+    }
+});
+
 // Update collection agent details
 // PUT /api/collectionAgents
 // Public
 const updateCollectionAgent = asyncHandler(async (req, res) => {
-    let updatedCollectionAgent = await CollectionAgent.findByIdAndUpdate(collectionAgentID, {
+    let updatedCollectionAgent = await CollectionAgent.findByIdAndUpdate(collectionAgent_ID, {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -135,7 +147,7 @@ const updateCollectionAgent = asyncHandler(async (req, res) => {
 
 
 const deleteCollectionAgent = asyncHandler(async (req, res) => {
-    let collectionAgent = await CollectionAgent.findByIdAndDelete(collectionAgentID);
+    let collectionAgent = await CollectionAgent.findByIdAndDelete(collectionAgent_ID);
     if (collectionAgent) {
         res.json({ message: 'Collection Agent removed' });
     } else {
@@ -143,4 +155,4 @@ const deleteCollectionAgent = asyncHandler(async (req, res) => {
         throw new Error('Collection Agent not found');
     }
 });
-export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent, updateCollectionAgent };
+export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent, updateCollectionAgent, collectionAgent_ID, getAllCollectionAgents };
