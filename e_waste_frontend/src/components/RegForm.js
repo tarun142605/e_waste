@@ -1,14 +1,16 @@
 // import myimage from '../images/image1.jpg';
-import React, { usestate } from 'react';
+import React, { useState } from 'react';
 
 function RegForm() {
-    const [formData, setFormData] = usestate({
+
+    const [formData, setFormData] = useState({
         fname: '',
         lname: '',
         email: '',
         mobile: '',
         password: '',
         repeatpassword: '',
+        type: 'customer',
         address: ''
       });
 
@@ -51,6 +53,15 @@ function RegForm() {
         </div>
         <form className="form-right" onSubmit={handleSubmit}>
             <h2 className="text-uppercase">Registration form</h2>
+            <div className="row">
+                <div className="col-sm-12 mb-3">
+                    <label>Register as</label>
+                    <select className="form-select" name="type" onChange={handleChange} aria-label="Default select example">
+                        <option selected value="customer">Customer</option>
+                        <option value="collector">Collector</option>
+                    </select>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-sm-6 mb-3">
                     <label>First Name</label>

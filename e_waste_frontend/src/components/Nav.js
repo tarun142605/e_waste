@@ -6,6 +6,7 @@ import BlogList from '../components/BlogList';
 import AboutUs from '../components/AboutUs';
 import Home from '../components/Home';
 import Careers from '../components/Careers';
+import Dash from '../components/Dashboard';
 
 function Nav() {
     return (
@@ -34,6 +35,10 @@ function Nav() {
            mx-2">
             <Link to="/aboutus" className="nav-link">About us</Link>
           </li>
+          <li className="nav-item
+           mx-2">
+            <Link to="/dash" className="nav-link">DashBoard</Link>
+          </li>
         </ul>
         <form className="d-flex" role="search">
           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -50,6 +55,7 @@ function Nav() {
           <Route path="/blogs" Component={BlogList}></Route>
           <Route path="/login" Component={LoginFrom}></Route>
           <Route path="/register" Component={RegForm}></Route>
+          <Route path="/dash" Component={Dash}></Route>
         </Routes>
   </Router>
     );

@@ -1,10 +1,10 @@
-import React, { usestate } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import RegForm from './RegForm';
 
 function LoginFrom() {
 
-    const [formData, setFormData] = usestate({
+    const [formData, setFormData] = useState({
         fname: '',
         lname: '',
         email: '',

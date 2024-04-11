@@ -1,10 +1,10 @@
-import React, { usestate, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 const Home = () => {
 
   function TypingEffect() {
-    const [text, setText] = usestate('');
+    const [text, setText] = useState('');
     const fullText = 'Transforming Trash into Technology: Together, We Power Progress!';
   
     useEffect(() => {

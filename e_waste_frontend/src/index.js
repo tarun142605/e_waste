@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RegForm from './components/RegForm';
 import Nav from './components/Nav';
+import Home from './components/Home';
+import Ticket from './components/Modals/Ticket';
+import Dash from './components/Dashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Nav />
+    {/* <Home/> */}
+    {/* <Ticket /> */}
   </React.StrictMode>
 );
 
