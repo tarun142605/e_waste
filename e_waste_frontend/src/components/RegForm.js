@@ -10,7 +10,9 @@ function RegForm() {
         password: '',
         repeatpassword: '',
         type: 'customer',
-        address: ''
+        address: '',
+        city: '',
+        pincode: ''
       });
 
     const handleChange = (e) => { 
@@ -25,13 +27,16 @@ function RegForm() {
     e.preventDefault();
     // You can add your form submission logic here
     let conn = new XMLHttpRequest();
-    conn.open("POST", "http://localhost:3000/custumer/registerCustumer", true);
+    conn.open("POST", "http://localhost:3000/customer/registerCustomer", true);
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
       if (this.readystate === 4 && this.status === 200) {
         let data = JSON.parse(this.responseText);
         console.log(data);
+      }
+      else{
+        console.log("Error");
       }
     };
     }

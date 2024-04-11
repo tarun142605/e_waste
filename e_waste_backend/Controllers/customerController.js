@@ -16,21 +16,20 @@ const loginCustomer = asyncHandler(async (req, res) => {
             customer_ID = customer._id;
             let accesToken = jwt.sign({
                 user: {
-                    firstName: customer.firstName,
-                    lastName: customer.lastName,
+                    firstName: customer.fName,
+                    lastName: customer.lName,
                     email: customer.email,
-                    houseNo: customer.houseNo,
-                    street: customer.street,
+                    houseNo: customer.address,
+                    //street: customer.street,
                     city: customer.city,
-                    state: customer.state,
+                    //state: customer.state,
                     pincode: customer.pincode,
-                    contact: customer.contact
+                    contact: customer.mobile
                 }
             }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1d' });
             res.status(200).json({ accesToken });
         } else {
-            res.status(400);
-            throw new Error('Invalid email or password');
+            res.status(400,"Invalid email or password");
         }
     }
 });
@@ -45,40 +44,38 @@ const registerCustomer = asyncHandler(async (req, res) => {
 
     let customerExists = await Customer.findOne({ email: details.email });
     if (customerExists) {
-        res.status(400);
-        throw new Error('Customer already exists');
+        res.status(400 ,"Customer already exists");
     }
     let hashedPass = await bcrypt.hash(req.body.password, 10);
     let customer = await Customer.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: req.body.fName,
+        lastName: req.body.lName,
         email: req.body.email,
-        houseNo: req.body.houseNo,
-        street: req.body.street,
+        houseNo: req.body.address,
+        //street: req.body.street,
         city: req.body.city,
-        state: req.body.state,
+        //state: req.body.state,
         pincode: req.body.pincode,
-        contact: req.body.contact,
+        contact: req.body.mobile,
         password: hashedPass
     });
 
     if (customer) {
         res.status(200).json({
             _id: customer._id,
-            firstName: customer.firstName,
-            lastName: customer.lastName,
+            firstName: customer.fName,
+            lastName: customer.lName,
             email: customer.email,
-            houseNo: customer.houseNo,
-            street: customer.street,
+            houseNo: customer.address,
+            //street: customer.street,
             city: customer.city,
-            state: customer.state,
+            //state: customer.state,
             pincode: customer.pincode,
-            contact: customer.contact,
+            contact: customer.mobile,
             password: customer.password
         });
     } else {
-        res.status(400);
-        throw new Error('Invalid customer data');
+        res.status(400, "Invalid customer data");
     }
 
 });
@@ -91,19 +88,18 @@ let getCustomer = asyncHandler(async (req, res) => {
     let customer = await Customer.findById(customer_ID);
     if (customer) {
         res.status(200).json({
-            firstName: customer.firstName,
-            lastName: customer.lastName,
+            firstName: customer.fName,
+            lastName: customer.lName,
             email: customer.email,
-            houseNo: customer.houseNo,
-            street: customer.street,
+            houseNo: customer.address,
+            //street: customer.street,
             city: customer.city,
-            state: customer.state,
+            //state: customer.state,
             pincode: customer.pincode,
-            contact: customer.contact
+            contact: customer.mobile
         });
     } else {
-        res.status(404);
-        throw new Error('Customer not found');
+        res.status(404,"Customer not found");
     }
 });
 
@@ -115,8 +111,7 @@ const getAllCustomers = asyncHandler(async (req, res) => {
     if(customers){
         res.status(200).json(customers);
     }else{
-        res.status(401);
-        throw new Error("invalid request");
+        res.status(401,"invalid request");
     }
 });
 
@@ -125,16 +120,16 @@ const getAllCustomers = asyncHandler(async (req, res) => {
 // Private
 
 const updateCustomer = asyncHandler(async (req, res) => {
-    let updatedCustomer = await Customer.findByIdAndUpdate(customerID, {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+    let updatedCustomer = await Customer.findByIdAndUpdate(customer_ID, {
+        firstName: req.body.fName,
+        lastName: req.body.lName,
         email: req.body.email,
-        houseNo: req.body.houseNo,
-        street: req.body.street,
+        houseNo: req.body.address,
+        // street: req.body.street,
         city: req.body.city,
-        state: req.body.state,
+        // state: req.body.state,
         pincode: req.body.pincode,
-        contact: req.body.contact
+        contact: req.body.mobile
     }, { new: true });
     res.status(200).json(updatedCustomer);
 });
@@ -144,12 +139,11 @@ const updateCustomer = asyncHandler(async (req, res) => {
 // DELETE /api/customers
 // Private/Admin
 const deleteCustomer = asyncHandler(async (req, res) => {
-    let customer = await Customer.findByIdAndDelete(customerID);
+    let customer = await Customer.findByIdAndDelete(customer_ID);
     if (customer) {
         res.json({ message: 'Customer removed' });
     } else {
-        res.status(404);
-        throw new Error('Customer not found');
+        res.status(404,"Customer not found");
     }
 });
 

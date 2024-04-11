@@ -16,18 +16,15 @@ const loginCollectionAgent = asyncHandler(async (req, res) => {
             collectionAgent_ID = collectionAgent._id;
             let accessToken = jwt.sign({
                 user: {
-                    firstName: collectionAgent.firstName,
-                    lastName: collectionAgent.lastName,
+                    firstName: collectionAgent.fName,
+                    lastName: collectionAgent.lName,
                     email: collectionAgent.email,
-                    houseNo: collectionAgent.houseNo,
-                    street: collectionAgent.street,
+                    houseNo: collectionAgent.address,
+                    //street: collectionAgent.street,
                     city: collectionAgent.city,
-                    state: collectionAgent.state,
+                    //state: collectionAgent.state,
                     pincode: collectionAgent.pincode,
-                    IdentityProofType: collectionAgent.IdentityProofType,
-                    IdentityProofNo: collectionAgent.IdentityProofNo,
-                    //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-                    contact: collectionAgent.contact
+                    contact: collectionAgent.mobile
                 }
             }, process.env.ACCSESS_TOKEN_SECRET, { expiresIn: '1d' });
             res.status(200).json({ accessToken });
@@ -47,40 +44,33 @@ const registerCollectionAgent = asyncHandler(async (req, res) => {
     }
     let hashedPass = await bcrypt.hash(req.body.password, 10);
     let collectionAgent = await CollectionAgent.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: req.body.fName,
+        lastName: req.body.lName,
         email: req.body.email,
-        houseNo: req.body.houseNo,
-        street: req.body.street,
+        houseNo: req.body.address,
+        // street: req.body.street,
         city: req.body.city,
-        state: req.body.state,
+        // state: req.body.state,
         pincode: req.body.pincode,
-        identityProofType: req.body.identityProofType,
-        identityProofNo: req.body.identityProofNo,
-        //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-        contact: req.body.contact,
+        contact: req.body.mobile,
         password: hashedPass
     });
 
     if (collectionAgent) {
         res.status(200).json({
-            firstName: collectionAgent.firstName,
-            lastName: collectionAgent.lastName,
+            firstName: collectionAgent.fName,
+            lastName: collectionAgent.lName,
             email: collectionAgent.email,
-            houseNo: collectionAgent.houseNo,
-            street: collectionAgent.street,
+            houseNo: collectionAgent.address,
+            // street: collectionAgent.street,
             city: collectionAgent.city,
-            state: collectionAgent.state,
+            // state: collectionAgent.state,
             pincode: collectionAgent.pincode,
-            identityProofType: collectionAgent.identityProofType,
-            identityProofNo: collectionAgent.identityProofNo,
-            //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-            contact: collectionAgent.contact,
+            contact: collectionAgent.mobile,
             password: collectionAgent.password
         });
     } else {
-        res.status(400);
-        throw new Error('Invalid collection agent data');
+        res.status(400,"Invalid collection agent data");
     }
 });
 
@@ -92,22 +82,18 @@ const getCollectionAgent = asyncHandler(async (req, res) => {
     let collectionAgent = await CollectionAgent.findById(collectionAgent_ID);
     if (collectionAgent) {
         res.status(200).json({
-            firstName: collectionAgent.firstName,
-            lastName: collectionAgent.lastName,
+            firstName: collectionAgent.fName,
+            lastName: collectionAgent.lName,
             email: collectionAgent.email,
-            houseNo: collectionAgent.houseNo,
-            street: collectionAgent.street,
+            houseNo: collectionAgent.address,
+            // street: collectionAgent.street,
             city: collectionAgent.city,
-            state: collectionAgent.state,
+            // state: collectionAgent.state,
             pincode: collectionAgent.pincode,
-            IdentityProofType: collectionAgent.IdentityProofType,
-            IdentityProofNo: collectionAgent.IdentityProofNo,
-            //IdentityProofImage: collectionAgent.IdentityProof.IdentityProofImage
-            contact: collectionAgent.contact
+            contact: collectionAgent.mobile
         });
     } else {
-        res.status(404);
-        throw new Error('Collection Agent not found');
+        res.status(404,"Collection Agent not found");
     }
 });
 
@@ -119,8 +105,7 @@ const getAllCollectionAgents = asyncHandler(async (req, res) => {
     if (collectionAgents) {
         res.status(200).json(collectionAgents);
     } else {
-        res.status(401);
-        throw new Error('invalid request');
+        res.status(401, "Invalid request");
     }
 });
 
@@ -129,18 +114,15 @@ const getAllCollectionAgents = asyncHandler(async (req, res) => {
 // Public
 const updateCollectionAgent = asyncHandler(async (req, res) => {
     let updatedCollectionAgent = await CollectionAgent.findByIdAndUpdate(collectionAgent_ID, {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: req.body.fName,
+        lastName: req.body.lName,
         email: req.body.email,
-        houseNo: req.body.houseNo,
-        street: req.body.street,
+        houseNo: req.body.address,
+        // street: req.body.street,
         city: req.body.city,
-        state: req.body.state,
+        // state: req.body.state,
         pincode: req.body.pincode,
-        IdentityProofType: req.body.IdentityProofType,
-        IdentityProofNo: req.body.IdentityProofNo,
-        //IdentityProofImage: req.body.IdentityProofImage
-        contact: req.body.contact,
+        contact: req.body.mobile
     }, { new: true });
     res.status(200).json(updatedCollectionAgent);
 });
@@ -151,8 +133,7 @@ const deleteCollectionAgent = asyncHandler(async (req, res) => {
     if (collectionAgent) {
         res.json({ message: 'Collection Agent removed' });
     } else {
-        res.status(404);
-        throw new Error('Collection Agent not found');
+        res.status(404,"Collection Agent not found");
     }
 });
 export { loginCollectionAgent, registerCollectionAgent, getCollectionAgent, deleteCollectionAgent, updateCollectionAgent, collectionAgent_ID, getAllCollectionAgents };
