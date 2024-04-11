@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import Axios from 'axios';
+// import Axios from 'axios';
 import RegForm from './RegForm';
 
 function LoginFrom() {
@@ -38,20 +37,23 @@ function LoginFrom() {
     };
     }
 
+    const handleLogout = () => {
+    }
+
   return (
     <div className="wrapper w-25">
-        <form className="form-right" onSubmit={handleChange}>
+        <form className="form-right" onSubmit={handleSubmit}>
             <h2 className="text-uppercase">Login</h2>
             <div className="row">
             <div className="col-sm-12 mb-3">
                 <label>email</label>
-                <input type="email" className="input-field" value={email} onChange={(e) => setEmail(e.target.value)} name="email"  />
+                <input type="email" className="input-field" value={formData.email} onChange={handleChange} name="email"  />
             </div>
             </div>  
             <div className="row">
                 <div className="col-sm-12 mb-3">
                     <label>password</label>
-                    <input type="password" name="password" id="pwd" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field" />
+                    <input type="password" name="password" id="pwd" value={formData.password} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             <div className="mb-3">
@@ -61,7 +63,7 @@ function LoginFrom() {
                 </label>
             </div>
             <div className="form-field">
-                {handleLogout()}
+                {handleLogout}
             </div>
             <div className="form-field">
                 <p>Don't have an account <Link to="/register">Register</Link></p>

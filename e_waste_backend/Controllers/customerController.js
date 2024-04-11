@@ -41,6 +41,7 @@ const loginCustomer = asyncHandler(async (req, res) => {
 // Public
 const registerCustomer = asyncHandler(async (req, res) => {
     let details = Customer(req.body);
+    console.log(details);
 
     let customerExists = await Customer.findOne({ email: details.email });
     if (customerExists) {
@@ -152,4 +153,4 @@ const deleteCustomer = asyncHandler(async (req, res) => {
     }
 });
 
-export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, customerID };
+export { loginCustomer, registerCustomer, getCustomer, updateCustomer, deleteCustomer, getAllCustomers, customer_ID };
