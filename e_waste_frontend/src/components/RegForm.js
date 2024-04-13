@@ -1,5 +1,8 @@
 // import myimage from '../images/image1.jpg';
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function RegForm() {
     const [formData, setFormData] = useState({
@@ -31,12 +34,17 @@ function RegForm() {
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
-      if (this.readystate === 4 && this.status === 200) {
-        let data = JSON.parse(this.responseText);
-        console.log(data);
+        console.log(this.status);
+      if (this.status === 200) {
+        // let data = JSON.parse(this.responseText);
+        // console.log(data);
+        // toast.remove()
+        toast.success("Registered Successfully");
+        window.location.href = "/login";
+        
       }
       else{
-        console.log("Error");
+        toast.error("Error");
       }
     };
     }
@@ -45,6 +53,7 @@ function RegForm() {
   return (
     <>
     <div className="wrapper">
+    <ToastContainer />
         <div className="form-left">
             <h2 className="text-uppercase">E-Waste Protal</h2>
             <img className="img-fluid" id='main-image' src={process.env.PUBLIC_URL + '/im1.jpg'} alt="" />
@@ -55,13 +64,13 @@ function RegForm() {
                 <input type="submit" className="account" value="Have an Account?" />
             </div>
         </div>
-        <form className="form-right" onSubmit={handleSubmit}>
+        <form className="form-right">
             <h2 className="text-uppercase">Registration form</h2>
             <div className="row">
                 <div className="col-sm-12 mb-3">
                     <label>Register as</label>
-                    <select className="form-select" name="type" onChange={handleChange} aria-label="Default select example">
-                        <option selected value="customer">Customer</option>
+                    <select className="form-select" defaultValue={"customer"} name="type" onChange={handleChange} aria-label="Default select example">
+                        <option value="customer">Customer</option>
                         <option value="collector">Collector</option>
                     </select>
                 </div>
@@ -69,45 +78,45 @@ function RegForm() {
             <div className="row">
                 <div className="col-sm-6 mb-3">
                     <label>First Name</label>
-                    <input type="text" name="fname" id="first_name" value={formData.fname} onChange={handleChange} className="input-field" />
+                    <input type="text" name="fname" id="first_name" value={formData.fname ?? ""} onChange={handleChange} className="input-field" />
                 </div>
                 <div className="col-sm-6 mb-3">
                     <label>Last Name</label>
-                    <input type="text" name="lname" id="last_name" value={formData.lname} onChange={handleChange} className="input-field" />
+                    <input type="text" name="lname" id="last_name" value={formData.lname ?? ""} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             <div className="mb-3">
                 <label>email</label>
-                <input type="email" className="input-field" value={formData.email} onChange={handleChange} name="email"  />
+                <input type="email" className="input-field" value={formData.email ?? ""} onChange={handleChange} name="email"  />
             </div>
             <div className="mb-3">
                 <label>Mobile</label>
-                <input type="number" className="input-field" value={formData.mobile} onChange={handleChange} name="mobile"  />
+                <input type="number" className="input-field" value={formData.mobile ?? ""} onChange={handleChange} name="mobile"  />
             </div>
             <div className="mb-3">
                 <label>Address</label>
-                <input type="text" className="input-field" value={formData.address} onChange={handleChange} name="address"  />
+                <input type="text" className="input-field" value={formData.address ?? ""} onChange={handleChange} name="address"  />
             </div>
 
             <div className="row">
                 <div className="col-sm-6 mb-3">
                     <label>city</label>
-                    <input type="text" name="city" id="pwd" value={formData.city} onChange={handleChange} className="input-field" />
+                    <input type="text" name="city" id="pwd" value={formData.city ?? ""} onChange={handleChange} className="input-field" />
                 </div>
                 <div className="col-sm-6 mb-3">
                     <label>Pin Code</label>
-                    <input type="number" name="pincode" id="cpwd" value={formData.pincode} onChange={handleChange} className="input-field" />
+                    <input type="number" name="pincode" id="cpwd" value={formData.pincode ?? ""} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             
             <div className="row">
                 <div className="col-sm-6 mb-3">
                     <label>password</label>
-                    <input type="password" name="password" id="pwd" value={formData.password} onChange={handleChange} className="input-field" />
+                    <input type="password" name="password" id="pwd" value={formData.password ?? ""} onChange={handleChange} className="input-field" />
                 </div>
                 <div className="col-sm-6 mb-3">
                     <label>Current password</label>
-                    <input type="password" name="repeatpassword" id="cpwd" value={formData.repeatpassword} onChange={handleChange} className="input-field" />
+                    <input type="password" name="repeatpassword" id="cpwd" value={formData.repeatpassword ?? ""} onChange={handleChange} className="input-field" />
                 </div>
             </div>
             <div className="mb-3">
@@ -117,7 +126,7 @@ function RegForm() {
                 </label>
             </div>
             <div className="form-field">
-                <input type="submit" value="Register" className="register" name="register" />
+                <input type="submit" onClick={(e)=>handleSubmit(e)} value="Register" className="register" name="register" />
             </div>
         </form>
     </div></>

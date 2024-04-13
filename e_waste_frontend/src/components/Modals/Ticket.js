@@ -15,18 +15,18 @@ const Ticket = () => {
 
     const Fm = () => {
 
-      const [selected_languages, set_Selected_languages] =  
+      const [selected_products, set_selected_products] =  
         useState([]); 
-    const languages =  
+    const products =  
         ['TV','AC','Fridge']; 
     const toggleLang = (option) => { 
-        if (selected_languages.includes(option)) { 
-            set_Selected_languages( 
-                selected_languages.filter((item) =>  
+        if (selected_products.includes(option)) { 
+            set_selected_products( 
+                selected_products.filter((item) =>  
                     item !== option)); 
         } else { 
-            set_Selected_languages( 
-                [...selected_languages, option]); 
+            set_selected_products( 
+                [...selected_products, option]); 
         } 
     }; 
 
@@ -63,12 +63,12 @@ const Ticket = () => {
                     Select Devices 
                 </Dropdown.Toggle> 
                 <Dropdown.Menu> 
-                    {languages.map((option, index) => ( 
+                    {products.map((option, index) => ( 
                         <Dropdown.Item 
                             key={index} 
                             onClick={() => toggleLang(option)} 
                             active={ 
-                                selected_languages.includes(option)} 
+                                selected_products.includes(option)} 
                         > 
                             {option} 
                         </Dropdown.Item> 
@@ -80,7 +80,7 @@ const Ticket = () => {
             <Col>
             <Form.Group className="mb-3" controlId="formGroupEmail">
             <div> 
-                {(selected_languages.length != 0) ? selected_languages.join(', ') : 'None'} 
+                {(selected_products.length != 0) ? selected_products.join(', ') : 'None'} 
             </div> 
             </Form.Group>
             </Col>

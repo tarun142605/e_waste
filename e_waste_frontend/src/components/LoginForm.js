@@ -6,12 +6,8 @@ import RegForm from './RegForm';
 function LoginFrom() {
 
     const [formData, setFormData] = useState({
-        fname: '',
-        lname: '',
         email: '',
-        mobile: '',
-        password: '',
-        repeatpassword: ''
+        password: ''
       });
 
     const handleChange = (e) => { 
@@ -26,18 +22,17 @@ function LoginFrom() {
     e.preventDefault();
     // You can add your form submission logic here
     let conn = new XMLHttpRequest();
-    conn.open("POST", "http://localhost:8000/api/register", true);
+    conn.open("POST", "http://localhost:3000/customer/loginCustomer", true);
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
-      if (this.readystate === 4 && this.status === 200) {
+      if (this.status === 200) {
         let data = JSON.parse(this.responseText);
         console.log(data);
+      }else{
+        console.log("Error");
       }
     };
-    }
-
-    const handleLogout = () => {
     }
 
   return (
@@ -63,7 +58,7 @@ function LoginFrom() {
                 </label>
             </div>
             <div className="form-field">
-                {handleLogout}
+            <input type="submit" value="Login" onClick={handleSubmit} className="register" name="login" />
             </div>
             <div className="form-field">
                 <p>Don't have an account <Link to="/register">Register</Link></p>

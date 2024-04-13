@@ -9,9 +9,11 @@ var customer_ID;
 // GET /api/customers
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
+    console.log(req.body);
     let { email, password } = req.body;
-    let customer = await Customer.findOne({ email });
+    let customer = await Customer.findOne({ "email": email });
     if (customer) {
+        console.log("cus is present");
         if (bcrypt.compare(password, customer.password)) {
             customer_ID = customer._id;
             let accesToken = jwt.sign({
@@ -31,6 +33,8 @@ const loginCustomer = asyncHandler(async (req, res) => {
         } else {
             res.status(400,"Invalid email or password");
         }
+    }else{
+        res.status(400,"Invalid email or password");
     }
 });
 

@@ -10,6 +10,13 @@ const Dash = () => {
     const createTicket = () => {
         setCheck(true);
     }
+    // console.log(document.getElementsByClassName("btn-close").length);
+    if(document.getElementsByClassName("btn-close").length){
+        console.log("btn-close");
+        document.getElementsByClassName("btn-close")[0].addEventListener("click", function(){
+            setCheck(false);
+        });
+    }
 
     return (
         <div>
