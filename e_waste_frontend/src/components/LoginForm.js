@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import RegForm from './RegForm';
 
 function LoginFrom() {
-
+    
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -27,13 +27,21 @@ function LoginFrom() {
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
       if (this.status === 200) {
-        let data = JSON.parse(this.responseText);
+        debugger;
+        //let data = JSON.parse(this.responseText);
+        let data = this.responseText;
         console.log(data);
+        localStorage.setItem("token", data);
+        if(localStorage.getItem("token") != null){
+          console.log("Success");
+          //isLoggedIn = true;
+          window.location.href = "/";
       }else{
         console.log("Error");
       }
     };
-    }
+    }  
+  }
 
   return (
     <div className="wrapper w-25">
@@ -68,4 +76,4 @@ function LoginFrom() {
   );
 }
 
-export default LoginFrom;
+export default LoginFrom ;

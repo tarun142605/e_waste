@@ -1,4 +1,5 @@
 import App from '../App';
+import React, { useState } from 'react';
 import RegForm  from '../components/RegForm';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import LoginFrom from '../components/LoginForm';
@@ -7,8 +8,18 @@ import AboutUs from '../components/AboutUs';
 import Home from '../components/Home';
 import Careers from '../components/Careers';
 import Dash from '../components/Dashboard';
+//import { isLoggedIn } from '../components/LoginForm';
 
 function Nav() {
+  debugger;
+   
+  const [isLoggedIn,setLoggedin] = useState(localStorage.getItem("token") != null ? true : false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    setLoggedin(false);
+  }
+
     return (
       <Router>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -44,7 +55,9 @@ function Nav() {
           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
           <button className="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <Link to="/login" className="btn btn-outline-primary mx-1">login</Link>
+        <div>
+        { isLoggedIn ? (<button className="btn btn-outline-primary mx-1" onClick={handleLogout}>Logout</button>) : (<Link to="/login" className="btn btn-outline-primary mx-1">login</Link>)}
+        </div>
       </div>
     </div>
   </nav>
