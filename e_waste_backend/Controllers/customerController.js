@@ -9,12 +9,11 @@ var customer_ID;
 // GET /api/customers
 // Public
 const loginCustomer = asyncHandler(async (req, res) => {
-    console.log(req.body);
     let { email, password } = req.body;
     let customer = await Customer.findOne({ "email": email });
     if (customer) {
-        console.log("cus is present");
-        if (bcrypt.compare(password, customer.password)) {
+        if (await bcrypt.compare(password, customer.password)) {
+            console.log("cus is present");
             customer_ID = customer._id;
             let accesToken = jwt.sign({
                 user: {
