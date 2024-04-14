@@ -6,12 +6,57 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';  
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Ticket = () => {
 
     let check = true;
-    
+    const [visible,setVisibility] = useState('show');
+
+    const [formData, setFormData] = useState({
+      name:'',
+      phone: '',
+      email: '',
+      comments: ''
+    });
+
+    const inputRef = useRef(null);
+
+    const handleChange = (e) => { 
+        const { name, value } = e.target;
+        inputRef.current = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [formData]);
+
+    const closeModal = () => {  
+      setVisibility('hide');
+    }
+
+    const handelSubmit = (e) => {
+      
+      e.preventDefault();
+      let conn = new XMLHttpRequest();
+      conn.open("POST", "http://localhost:3000/ticket/createTicket", true);
+      conn.setRequestHeader("Content-Type", "application/json");
+      conn.send(JSON.stringify(formData));
+      conn.onreadystatechange = function() {
+        if (this.status === 200) {
+          let data = JSON.parse(this.responseText);
+          console.log(data);
+        }else{
+          console.log("Error");
+        }
+      };
+    }
 
     const Fm = () => {
 
@@ -37,13 +82,13 @@ const Ticket = () => {
           <Col>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="First name" />
+            <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
           </Form.Group>
           </Col>
           <Col>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label>Phone</Form.Label>
-            <Form.Control type="text" placeholder="Last name" />
+            <Form.Control type="number" name="phone" value={formData.phone} placeholder="Phone" />
           </Form.Group>
             </Col>
           </Row>
@@ -51,7 +96,7 @@ const Ticket = () => {
             <Col>
             <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="text" placeholder="Email" />
+            <Form.Control type="email" name="email" value={formData.email} placeholder="Email" />
             </Form.Group>
             </Col>
           </Row>
@@ -97,7 +142,7 @@ const Ticket = () => {
             <Col>
             <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label>Comments</Form.Label>
-            <Form.Control type="text" placeholder="Any Comments" />
+            <Form.Control type="text" name="comments" value={formData.comments} placeholder="Any Comments" />
             </Form.Group>
             </Col>
           </Row>
@@ -109,11 +154,11 @@ const Ticket = () => {
     const NewTicket = () => {
         return (
           <div
-            className="modal show"
+            className={ 'modal ' + visible }
             style={{ display: 'block', position: 'initial' }}
           >
             <Modal.Dialog>
-              <Modal.Header closeButton>
+              <Modal.Header>
                 <Modal.Title>Create Ticket</Modal.Title>
               </Modal.Header>
       
@@ -122,8 +167,8 @@ const Ticket = () => {
               </Modal.Body>
       
               <Modal.Footer>
-                <Button variant="secondary">Cancel</Button>
-                <Button variant="primary">Submit</Button>
+                <Button variant="secondary" onClick={closeModal}>Cancel</Button>
+                <Button variant="primary" onClick={handelSubmit}>Submit</Button>
               </Modal.Footer>
             </Modal.Dialog>
           </div>
