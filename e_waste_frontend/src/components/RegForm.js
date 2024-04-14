@@ -29,6 +29,7 @@ function RegForm() {
     const handleSubmit = (e) => {
     e.preventDefault();
     // You can add your form submission logic here
+    if (formData.type === 'customer'){
     let conn = new XMLHttpRequest();
     conn.open("POST", "http://localhost:3000/customer/registerCustomer", true);
     conn.setRequestHeader("Content-Type", "application/json");
@@ -47,7 +48,27 @@ function RegForm() {
         toast.error("Error");
       }
     };
+    }else{
+        let conn = new XMLHttpRequest();
+        conn.open("POST", "http://localhost:3000/collectionAgent/registerCollectionAgent", true);
+        conn.setRequestHeader("Content-Type", "application/json");
+        conn.send(JSON.stringify(formData));
+        conn.onreadystatechange = function() {
+            console.log(this.status);
+          if (this.status === 200) {
+            // let data = JSON.parse(this.responseText);
+            // console.log(data);
+            // toast.remove()
+            toast.success("Registered Successfully");
+            window.location.href = "/login";
+            
+          }
+          else{
+            toast.error("Error");
+          }
+        };
     }
+}
     
 
   return (

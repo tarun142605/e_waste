@@ -6,7 +6,7 @@ const Home = () => {
   function TypingEffect() {
     const [text, setText] = useState('');
     const fullText = 'Transforming Trash into Technology: Together, We Power Progress!';
-  
+
     useEffect(() => {
       let timer = setInterval(() => {
         setText((prevText) => {
@@ -17,36 +17,69 @@ const Home = () => {
           }
         });
       }, 110); // Change speed of typing here
-  
+
       return () => {
         clearInterval(timer);
       };
     }, []);
-  
+
     return <div>{text}</div>;
   }
 
   return (
     <>
-    <div className="container-fluid parent">
-      <div className="min-vh-100 child-1" style={{backgroundImage:`URL(${process.env.PUBLIC_URL+'/cor-img1.jpg'})`,backgroundRepeat: 'no-repeat',backgroundSize: 'cover',boxShadow:'0 0 8px 8px white inset', opacity:0.4}}>
+      <div className="container-fluid parent">
+        <div className="min-vh-100 child-1" style={{ backgroundImage: `URL(${process.env.PUBLIC_URL + '/image21.png'})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', boxShadow: '0 0 8px 8px white inset', opacity: 0.35, backgroundPosition: 'center' }}>
+        </div>
+        <div className="min-vh-100 d-flex flex-column justify-content-center align-items-center child-2">
+          <h1 style={{ fontSize: '100px' }}>VirtuGreen</h1>
+          <h2>Reduce , Reuse , recycle</h2>
+          <h3 className="text-center text-black">{TypingEffect()}</h3>
+        </div>
       </div>
-      <div className="min-vh-100 d-flex flex-column justify-content-center align-items-center child-2">
-        <h1>SustainableTechSolutions</h1>
-        <h3 className="text-center text-black">{TypingEffect()}</h3>
-    </div>
-    </div>
-    <div className="constainer-fluid">
-      
-    </div>
-    <div className="container-fluid wrapper" style={{maxWidth:'95%', marginTop:'2%'}}>
-      <div className="form-right min-vh-100">
-      <h2 className="display-1 text-center my-5">Welcome to SustainableTechSolutions</h2>
-      <p className="lead">E-waste is a popular, informal name for electronic products nearing the end of their "useful life." Computers, televisions, VCRs, stereos, copiers, and fax machines are common electronic products. Many of these products can be reused, refurbished, or recycled.</p>
-      <p className="lead">With the passage of the Electronic Waste Recycling Act of 2003, certain portions of the electronic waste stream are defined and the systems to recover and recycle them will be administratively regulated beyond the universal waste rules that apply to material handling. For this reason, the state of California has specified that e-waste can not be disposed of with regular trash.</p>
-      <p className="lead">California's Department of Toxic Substances Control (DTSC) has established regulations to manage hazardous waste, including e-waste. The regulations are designed to ensure that hazardous waste is managed properly and that it does not pose a threat to human health or the environment. The regulations also require that hazardous waste be properly tracked from the point of generation to the point of final disposition. The regulations also require that hazardous waste be properly tracked from the point of generation to the point of final disposition. The regulations also require that hazardous waste be properly tracked from the point of generation to the point of final disposition. The regulations also require that hazardous waste be properly tracked from the point of generation to the point of final disposition.</p>
-    </div>
-    </div>
+      <div className="constainer-fluid">
+
+      </div>
+      <div className="container-fluid wrapper" style={{ maxWidth: '95%', marginTop: '2%' }}>
+        <div className="form-right" style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className="form-right-content" style={{ width: '60%', margin: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <hr style={{ width: '25%', border: '2px solid crimson', margin: '8px' }} />
+              <h2 className="display-1 text-center my-5" style={{fontFamily:'monospace',color:'darkcyan',fontSize:'28px'}}>Welcome to VirtuGreen</h2>
+              <hr style={{ width: '25%', border: '2px solid crimson', margin: '8px' }} />
+            </div>
+            <p style={{ fontFamily: 'sans-serif', fontSize: '20px' }}>
+              VirtuGreen is a pioneering company at the forefront of sustainable solutions, dedicated to revolutionizing the way we approach environmental conservation.
+              <br />
+              <br />
+              We are committed to providing innovative, sustainable solutions that help protect the environment and promote a greener, cleaner future for all. Our mission is to transform trash into technology, turning waste into valuable resources that can be used to power progress and create a more sustainable world for future generations.
+              <br />
+              <br />
+              VirtuGreen is a platform that helps you recycle your e-waste. We
+              provide a platform for you to recycle your e-waste in an
+              environmentally friendly way. We provide a platform for you to
+              recycle your e-waste in an environmentally friendly way.
+              <br />
+            </p>
+          </div>
+          <div className="form-right-content" style={{ width: '40%' }}>
+            <img src={'/image2.jpg'} style={{ width: '100%' }} />
+          </div>
+        </div>
+      </div>
+      <div className="container-fluid wrapper" style={{ maxWidth: '95%', marginTop: '2%' }}>
+        <div className="form-right" style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className='form-right-content' style={{ width: '40%' }}>
+            <img src={'/image1.jpg'} style={{ width: '100%' }} />
+          </div>
+        <div style={{ display: 'flex', alignItems: 'center',justifyContent:'center',width:'50%' }}>
+              <hr style={{ width: '25%', border: '2px solid crimson', margin: '8px' }} />
+              <h2 className="display-1 text-center my-5" style={{fontFamily:'monospace',color:'darkcyan',fontSize:'28px'}}>Our Services</h2>
+              <hr style={{ width: '25%', border: '2px solid crimson', margin: '8px' }} />
+            </div>
+            
+        </div>
+      </div>
     </>
   );
 };

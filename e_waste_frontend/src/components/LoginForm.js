@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import RegForm from './RegForm';
 
 function LoginFrom() {
-
+    
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        type:'customer'
       });
 
     const handleChange = (e) => { 
@@ -21,24 +22,64 @@ function LoginFrom() {
     const handleSubmit = (e) => {
     e.preventDefault();
     // You can add your form submission logic here
+    if(formData.type === 'customer'){
     let conn = new XMLHttpRequest();
     conn.open("POST", "http://localhost:3000/customer/loginCustomer", true);
     conn.setRequestHeader("Content-Type", "application/json");
     conn.send(JSON.stringify(formData));
     conn.onreadystatechange = function() {
       if (this.status === 200) {
-        let data = JSON.parse(this.responseText);
+        debugger;
+        //let data = JSON.parse(this.responseText);
+        let data = this.responseText;
         console.log(data);
+        localStorage.setItem("token", data);
+        if(localStorage.getItem("token") != null){
+          console.log("Success");
+          //isLoggedIn = true;
+          window.location.href = "/";
       }else{
         console.log("Error");
       }
     };
-    }
+    }  
+  }else{
+    let conn = new XMLHttpRequest();
+    conn.open("POST", "http://localhost:3000/collectionAgent/loginCollectionAgent", true);
+    conn.setRequestHeader("Content-Type", "application/json");
+    conn.send(JSON.stringify(formData));
+    conn.onreadystatechange = function() {
+      if (this.status === 200) {
+        debugger;
+        //let data = JSON.parse(this.responseText);
+        let data = this.responseText;
+        console.log(data);
+        localStorage.setItem("token", data);
+        if(localStorage.getItem("token") != null){
+          console.log("Success");
+          //isLoggedIn = true;
+          window.location.href = "/";
+      }else{
+        console.log("Error");
+      }
+    };
+    } 
+  }
+  }
 
   return (
     <div className="wrapper w-25">
         <form className="form-right" onSubmit={handleSubmit}>
             <h2 className="text-uppercase">Login</h2>
+            <div className="row">
+                <div className="col-sm-12 mb-3">
+                    <label>Register as</label>
+                    <select className="form-select" defaultValue={"customer"} name="type" onChange={handleChange} aria-label="Default select example">
+                        <option value="customer">Customer</option>
+                        <option value="collector">Collector</option>
+                    </select>
+                </div>
+            </div>
             <div className="row">
             <div className="col-sm-12 mb-3">
                 <label>email</label>
@@ -68,4 +109,4 @@ function LoginFrom() {
   );
 }
 
-export default LoginFrom;
+export default LoginFrom ;
